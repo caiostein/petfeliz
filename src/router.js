@@ -8,7 +8,6 @@ import listaEventos from '@/components/listaEventos'
 import editarEvento from '@/components/editarEvento'
 import novoEvento from '@/components/novoEvento'
 import verEvento from '@/components/verEvento'
-import listaDeMusicas from '@/components/listaDeMusicas'
 import firebase from "firebase";
 
 Vue.use(Router)
@@ -37,14 +36,7 @@ const router = new Router({
         requiresAuth: true
       }
     },
-    {
-      path: '/listaDeMusicas/:id_evento',
-      name: 'listaDeMusicas',
-      component: listaDeMusicas,
-      meta: {
-        requiresAuth: true
-      }
-    },
+  
     {
       path: '/editarEvento/:id_evento',
       name: 'editarEvento',

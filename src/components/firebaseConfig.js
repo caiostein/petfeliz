@@ -1,11 +1,11 @@
 export default {
     
-        apiKey: "AIzaSyAvagxI_0z8D3JCh-u-M4DVF7ewZFOYQ7s",
-        authDomain: "portal-de-eventos.firebaseapp.com",
-        databaseURL: "https://portal-de-eventos.firebaseio.com",
-        projectId: "portal-de-eventos",
-        storageBucket: "",
-        messagingSenderId: "374776665206",
-        appId: "1:374776665206:web:145895fff72e179a"
+  apiKey: "AIzaSyC8yEoauqc3zLajzmskDAwxmXl__ooIRoU",
+  authDomain: "petfeliz-d4d05.firebaseapp.com",
+  databaseURL: "https://petfeliz-d4d05.firebaseio.com",
+  projectId: "petfeliz-d4d05",
+  storageBucket: "petfeliz-d4d05.appspot.com",
+  messagingSenderId: "334197350972",
+  appId: "1:334197350972:web:e0437c9294837eb1925939"
     
 }
