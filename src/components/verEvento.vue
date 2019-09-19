@@ -7,7 +7,6 @@
       <li class="collection-item">ID do Evento: {{id_evento}}</li>
       <li class="collection-item">Local do Evento: {{local}}</li>
       <li class="collection-item">Tipo do Evento: {{tipo}}</li>
-        <li class="collection-item">Link formulário inscrição: <a v-bind:href="form" target="_blank">{{form}}</a></li>
     </ul>
     <router-link to="../listaEventos" class="btn grey">Back</router-link>
     <button @click="deletarEvento" class="btn red">Delete</button>
@@ -20,8 +19,6 @@
         <i class="fa fa-pencil"></i>
       </router-link>
     </div>
-
-    <router-link v-bind:to="{name: 'listaDeMusicas', params:{id_evento:id_evento}}" class="btn">Lista de Músicas</router-link>
   </div>
 </template>
 
