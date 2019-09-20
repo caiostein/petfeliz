@@ -12,6 +12,8 @@
 
 <script>
     import firebase from 'firebase'
+    import db from '../components/firebaseInit'   // importando o db para ter acesso a instanciação no campo "abrigo"
+
     export default {
         name: "cadastro",
         data(){
@@ -31,6 +33,7 @@
                         alert('Espere! ' + err.message)
                     }
                 );
+
             }
         }
     }

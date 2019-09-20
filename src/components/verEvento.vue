@@ -4,8 +4,11 @@
       <li class="collection-header">
         <h4>{{nome}}</h4>
       </li>
-      <li class="collection-item">ID do Evento: {{id_evento}}</li>
+      <li class="collection-item">Nome do Evento: {{nome}}</li>
+      <li class="collection-item">Descrição do Evento: {{descricao}}</li>
       <li class="collection-item">Local do Evento: {{local}}</li>
+      <li class="collection-item">Data de realização do Evento: {{data}}</li>
+      <li class="collection-item">Horário de início do Evento: {{horario}}</li>
       <li class="collection-item">Tipo do Evento: {{tipo}}</li>
     </ul>
     <router-link to="../listaEventos" class="btn grey">Back</router-link>
@@ -30,9 +33,12 @@ export default {
     return {
       id_evento: null,
       nome: null,
+      descricao: null,
       local: null,
+      data:null,
+      horario:null,
       tipo: null,
-      form: null
+      
     };
   },
   beforeRouteEnter(to, from, next) {
@@ -44,9 +50,12 @@ export default {
           next(vm => {
             vm.id_evento = doc.data().id_evento;
             vm.nome = doc.data().nome;
+            vm.descricao = doc.data().descricao;
             vm.local = doc.data().local;
+            vm.data = doc.data().data;
+            vm.horario = doc.data().horario;
             vm.tipo = doc.data().tipo;
-            vm.form = doc.data().form;
+            
           });
         });
       });
@@ -63,9 +72,11 @@ export default {
           querySnapshot.forEach(doc => {
             this.id_evento = doc.data().id_evento;
             this.nome = doc.data().nome;
+            this.descricao = doc.data().descricao;
             this.local = doc.data().local;
+            this.data = doc.data().data;
+            this.horario = doc.data().horario;
             this.tipo = doc.data().tipo;
-            this.form = doc.data().form;
           });
         });
     },

@@ -5,8 +5,8 @@
     <br />
     <router-link to="/listaEventos">
       <img
-        src="https://observatoriog.bol.uol.com.br/wordpress/wp-content/uploads/2018/09/Festa-di-SantAnna-2015-Christmas-Edition-Lake-Como-Events-2.png"
-        alt="festinha"
+        src="https://statig2.akamaized.net/bancodeimagens/05/fl/x8/05flx89pq6dmakwdgppntbssc.jpg"
+        alt="cachorro"
       />
     </router-link>
   </div>
