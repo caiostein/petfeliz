@@ -5,11 +5,12 @@
                 <span v-if="usuarioEstaLogado"><router-link to="/profile">{{usuarioLogado}}</router-link></span>
                 <span class="brand-logo" v-else>Portal de Eventos PetFeliz</span>    
                 <ul id="nav-movbile" class="right hide-on-med-and-down">                          
+                    <li v-if="usuarioEstaLogado"><router-link to="/home">Página Inicial</router-link></li>
                     <li v-if="usuarioEstaLogado"><router-link to="/listaEventos">Feed</router-link></li>
-                    <li v-if="usuarioEstaLogado"><router-link to="/home">Inscrições</router-link></li>
                     <li v-if="usuarioEstaLogado"><router-link to="/profile">Perfil</router-link></li>
                     <li v-if="usuarioEstaLogado"><router-link to="/newanimal">Adicionar Animal</router-link></li>
-                    <li v-if="usuarioEstaLogado"><router-link to="/novoevento">Criar novo Evento</router-link></li>
+                    <li v-if="usuarioEstaLogado"><router-link to="/listaAnimais">Visualizar Animais Registrados</router-link></li>
+                    <li v-if="usuarioEstaLogado"><router-link to="/new">Criar novo Evento</router-link></li>
                     <li v-if="usuarioEstaLogado"><a v-on:click="logout" class="waves-effect waves-light btn red">Sair</a></li>
                 </ul>
             </div>

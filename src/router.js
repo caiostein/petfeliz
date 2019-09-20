@@ -9,6 +9,9 @@ import editarEvento from '@/components/editarEvento'
 import novoEvento from '@/components/novoEvento'
 import verEvento from '@/components/verEvento'
 import novoAnimal from '@/components/novoAnimal'
+import listaAnimais from '@/components/listaAnimais'
+import verAnimal from '@/components/verAnimal'
+import editarAnimal from '@/components/editarAnimal'
 import firebase from "firebase"
 
 
@@ -97,7 +100,35 @@ const router = new Router({
             meta: {
                 requiresAuth: true
             }
+        },
+
+        {
+            path: '/listaAnimais',
+            name: 'listaAnimais',
+            component: listaAnimais,
+            meta: {
+                requiresAuth: true
+            }
+        },
+
+        {
+            path: '/verAnimal/:id_animal',
+            name: 'verAnimal',
+            component: verAnimal,
+            meta: {
+                requiresAuth: true
+            }
+        },
+
+        {
+            path: '/editarAnimal/:id_animal',
+            name: 'editarAnimal',
+            component: editarAnimal,
+            meta: {
+                requiresAuth: true
+            }
         }
+
 
     ]
 });

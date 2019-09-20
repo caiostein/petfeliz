@@ -56,7 +56,7 @@
     
 
 export default{
-    name: 'novoEvento',
+    name: 'novoAnimal',
     data(){
         return {
             id_animal: null,
@@ -77,11 +77,10 @@ export default{
                 idade:this.idade,
                 raca:this.raca,
                 foto:this.foto,
-                abrigoDono:  firebase.auth().currentUser.email
-
+                abrigoDono: firebase.auth().currentUser.email
             })
             .then(docRef=> {
-                this.$router.push('/home') // criar router
+                this.$router.push('/listaAnimais') 
             })
             .catch(error => {
                 console.log(err)

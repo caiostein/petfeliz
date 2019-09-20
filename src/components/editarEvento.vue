@@ -28,8 +28,8 @@
                 <input type="url" v-model="form" required>
                 </div>    
             </div>
-             <router-link to="../listaEventos" class="btn grey">Cancel</router-link>
-            <button type="submit" class="btn">Submit</button>           
+             <router-link to="../listaEventos" class="btn grey">Cancelar</router-link>
+            <button type="submit" class="btn">Confirmar</button>           
             </form>
         </div>
     </div>
