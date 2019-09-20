@@ -23,9 +23,19 @@
                 <input type="text" v-model="tipo" required>
                 </div>    
             </div>
-            <div class="row">
+             <div class="row">
                 <div class="input-field col s12">
-                <input type="url" v-model="form" required>
+                <input type="text" v-model="descricao" required>
+                </div>    
+            </div>
+             <div class="row">
+                <div class="input-field col s12">
+                <input type="text" v-model="horario" required>
+                </div>    
+            </div>
+             <div class="row">
+                <div class="input-field col s12">
+                <input type="text" v-model="dia" required>
                 </div>    
             </div>
              <router-link to="../listaEventos" class="btn grey">Cancelar</router-link>
@@ -45,7 +55,9 @@
             nome:null,
             local:null,
             tipo:null,
-            form:null
+            descricao:null,
+            horario:null,
+            data:null
         }
     },
     beforeRouteEnter(to, from, next){
@@ -56,7 +68,9 @@
                     vm.nome = doc.data().nome
                     vm.local = doc.data().local
                     vm.tipo = doc.data().tipo
-                    vm.form = doc.data().form
+                    vm.descricao = doc.data().descricao
+                    vm.horario = doc.data().horario
+                    vm.dia = doc.data().dia
                 })
             })
         })
@@ -72,7 +86,9 @@
                 this.nome = doc.data().nome
                 this.local = doc.data().local
                 this.tipo = doc.data().tipo
-                this.form = doc.data().form
+                this.descricao = doc.data().descricao
+                this.horario = doc.data().horario
+                this.dia = doc.data().dia
             })
             })
         },
@@ -84,7 +100,9 @@
                    nome: this.nome,
                    local: this.local,
                    tipo: this.tipo,
-                   form: this.form
+                   descricao: this.descricao,
+                   horario: this.horario,
+                   dia: this.dia
                })
                .then(
                    () =>
