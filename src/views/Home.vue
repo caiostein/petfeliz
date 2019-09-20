@@ -1,6 +1,6 @@
 <template>
   <div class="container center-align">
-    <h1>Portal de Eventos</h1>
+    <h1>Portal de Eventos PetFeliz</h1>
     <br />
     <br />
     <router-link to="/listaEventos">
