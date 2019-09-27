@@ -26,3 +26,4 @@ Vue.filter('formatDate', function (value) {
   return moment(value.toString()).format('MM/DD/YYYY hh:mm')
 })
 
+

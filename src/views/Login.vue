@@ -6,6 +6,13 @@
         <button class="btn waves-effect waves-light blue" @click="login" >Login
             <i class="material-icons right">send</i>
         </button>
+
+        <p> Or Sign In with Google</p>
+
+        <button class="social-button" @click="socialLogin" >
+            <img alt="Google Logo" src="../assets/google-logo.png">
+        </button>
+
         <p>Sem conta? Não se preocupe, clique no link abaixo e una-se a nossa rede!</p>
         <router-link to="/Cadastro" class="btn waves-effect waves-light green">Cadastre aqui!     
          <i class="material-icons right">edit</i></router-link>
@@ -35,6 +42,34 @@
                 );
 
             }
-        }
+        },
+        socialLogin() {
+        const provider = new firebase.auth.GoogleAuthProvider();
+
+        firebase.auth().signInWithPopup(provider).then((result) => {
+          this.$router.replace('home');
+          location.reload();
+        }).catch((err) => {
+          alert('Oops. ' + err.message)
+        });
     }
+  }
 </script>
+
+<style scoped> 
+  .social-button {
+    width: 75px;
+    background: white;
+    padding: 10px;
+    border-radius: 100%;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.2);
+    outline: 0;
+    border: 0;
+  }
+  .social-button:active {
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.1);
+  }
+  .social-button img {
+    width: 100%;
+  }
+</style>
