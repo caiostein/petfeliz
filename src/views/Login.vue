@@ -9,9 +9,11 @@
 
         <p> Or Sign In with Google</p>
 
-        <button class="social-button" @click="socialLogin" >
+       <button class="social-button" @click="socialLogin" >
             <img alt="Google Logo" src="../assets/google-logo.png">
         </button>
+
+       
 
         <p>Sem conta? Não se preocupe, clique no link abaixo e una-se a nossa rede!</p>
         <router-link to="/Cadastro" class="btn waves-effect waves-light green">Cadastre aqui!     
@@ -22,6 +24,7 @@
 
 <script>
     import firebase from 'firebase'
+import { Script } from 'vm';
     export default {
         name: "login",
         data(){
@@ -41,20 +44,21 @@
                     }
                 );
 
-            }
-        },
-        socialLogin() {
-        const provider = new firebase.auth.GoogleAuthProvider();
+            },
 
-        firebase.auth().signInWithPopup(provider).then((result) => {
-          this.$router.replace('home');
-          location.reload();
-        }).catch((err) => {
-          alert('Oops. ' + err.message)
-        });
+        socialLogin() {
+            const provider = new firebase.auth.GoogleAuthProvider();
+
+            firebase.auth().signInWithPopup(provider).then((result) => {
+            this.$router.replace('home');
+            location.reload();
+            }).catch((err) => {
+            alert('Oops. ' + err.message)
+            });
+        }   
     }
   }
-</script>
+</script>  
 
 <style scoped> 
   .social-button {
