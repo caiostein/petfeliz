@@ -70,21 +70,27 @@ export default{
     },
     methods: {
         salvarAnimal(){
-            db.collection('animal').add({
-                id_animal: this.id_animal,
-                nome:this.nome,
-                tipo:this.tipo,
-                idade:this.idade,
-                raca:this.raca,
-                foto:this.foto,
-                abrigoDono: firebase.auth().currentUser.email
-            })
-            .then(docRef=> {
-                this.$router.push('/listaAnimais') 
-            })
-            .catch(error => {
-                console.log(err)
-            })
+
+            firebase.auth().onAuthStateChanged((user) => {
+                        if (user) {
+                        // User logged in already or has just logged in.
+                        db.collection('abrigo').doc(user.uid).collection('animal').add({
+                            id_animal: this.id_animal,
+                            nome:this.nome,
+                            tipo:this.tipo,
+                            idade:this.idade,
+                            raca:this.raca,
+                            foto:this.foto,
+                            abrigoDono: firebase.auth().currentUser.email
+                        })
+                        
+                        }
+                    }).then(docRef=> {
+                    this.$router.push('/listaAnimais') 
+                })
+                .catch(error => {
+                    console.log(err)
+                })
         }
     }
   

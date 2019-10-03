@@ -40,23 +40,23 @@ export default {
         };
     },
   beforeRouteEnter(to, from, next) {
-    db.collection("animal")
-      .where("id_animal", "==", to.params.id_animal)
-      .get()
-      .then(querySnapshot => {
-        querySnapshot.forEach(doc => {
-          next(vm => {
-            vm.id_animal = doc.data().id_animal;
-            vm.nome = doc.data().nome;
-            vm.tipo = doc.data().tipo;
-            vm.idade = doc.data().idade;
-            vm.raca = doc.data().raca;
-            vm.foto = doc.data().foto;
-            vm.abrigoDono = doc.data().abrigoDono;
+      db.collection("animal") //db.collection('abrigo').doc(user.uid).collection('animal')
+        .where("id_animal", "==", to.params.id_animal)
+        .get()
+        .then(querySnapshot => {
+          querySnapshot.forEach(doc => {
+            next(vm => {
+              vm.id_animal = doc.data().id_animal;
+              vm.nome = doc.data().nome;
+              vm.tipo = doc.data().tipo;
+              vm.idade = doc.data().idade;
+              vm.raca = doc.data().raca;
+              vm.foto = doc.data().foto;
+              vm.abrigoDono = doc.data().abrigoDono;
+            });
           });
         });
-      });
-  },
+    },
   watch: {
     $route: "fetchData"
   },

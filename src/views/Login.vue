@@ -1,21 +1,24 @@
 <template>
     <div class = "login container center-align">
         <h3>Login</h3>
-        <input type="text" v-model="email" placeholder="Email" class="validate"><br>
-        <input type="password" v-model="password" placeholder="Senha" class="validate"><br><br>
-        <button class="btn waves-effect waves-light blue" @click="login" >Login
-            <i class="material-icons right">send</i>
-        </button>
-
-        <p> Or Sign In with Google</p>
+        <p>Seja bem vindo ao Portal PetFeliz!<p>
+        <p> Acesse nosso portal utilizando sua conta do Google:</p> <br>
 
        <button class="social-button" @click="socialLogin" >
             <img alt="Google Logo" src="../assets/google-logo.png">
         </button>
 
-       
+        <br><br><br>
 
-        <p>Sem conta? Não se preocupe, clique no link abaixo e una-se a nossa rede!</p>
+        <h4>Login Institucional:</h4>
+
+        <input type="text" v-model="email" placeholder="Email" class="validate"><br>
+        <input type="password" v-model="password" placeholder="Senha" class="validate"><br>
+        <button class="btn waves-effect waves-light blue" @click="login" >Login
+            <i class="material-icons right">send</i>
+        </button>
+        
+        <p>Seu abrigo ainda não está cadastrado? Não se preocupe, clique no link abaixo e una-se a nossa rede!</p>
         <router-link to="/Cadastro" class="btn waves-effect waves-light green">Cadastre aqui!     
          <i class="material-icons right">edit</i></router-link>
     </div>
