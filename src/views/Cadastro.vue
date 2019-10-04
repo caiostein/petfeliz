@@ -36,7 +36,7 @@
 <script>
     import firebase from 'firebase'
     import db from '../components/firebaseInit'   // importando o db para ter acesso a instanciação no campo "abrigo"
-
+    var treco = false;
 
     export default {
         name: "cadastro",
@@ -54,6 +54,16 @@
         methods: {
             cadastro: function () {
                 firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then((user) =>{
+                     treco = firebase.auth().currentUser
+                     if (treco) {
+                         //User logged in already or has just logged in.
+                        db.collection('abrigo').doc(treco.uid).set({
+                        email:this.email,
+                        nome:this.nome,
+                        endereco:this.endereco,
+                        telefone:this.telefone
+                      })
+                        }
                         this.$router.push('login')
                         location.reload();
 
@@ -61,21 +71,6 @@
                     function (err) {
                         alert('Espere! ' + err.message)
                     }
-                ).then(
-                        
-                   firebase.auth().onAuthStateChanged((user) => {
-                        if (user) {
-                        // User logged in already or has just logged in.
-                        db.collection('abrigo').doc(user.uid).set({
-                        email:this.email,
-                        nome:this.nome,
-                        endereco:this.endereco,
-                        telefone:this.telefone
-                        })
-                        }
-                    }),
-                    
-
                 );}
         }
     }

@@ -4,6 +4,7 @@ import Home from './views/Home.vue'
 import Login from './views/Login.vue'
 import Cadastro from "./views/Cadastro"
 import Profile from './views/Profile'
+import profileAbrigo from './views/profileAbrigo'
 import listaEventos from '@/components/listaEventos'
 import editarEvento from '@/components/editarEvento'
 import novoEvento from '@/components/novoEvento'
@@ -71,6 +72,15 @@ const router = new Router({
             path: '/profile',
             name: 'Profile',
             component: Profile,
+            meta: {
+                requiresAuth: true
+            }
+        },
+        
+        {
+            path: '/profileAbrigo',
+            name: 'profileAbrigo',
+            component: profileAbrigo,
             meta: {
                 requiresAuth: true
             }
