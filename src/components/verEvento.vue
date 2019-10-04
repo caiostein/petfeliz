@@ -48,6 +48,7 @@ export default {
       data:null,
       horario:null,
       tipo: null
+      
     };
   },
   beforeRouteEnter(to, from, next) {
@@ -88,6 +89,7 @@ export default {
             this.data = doc.data().data;
             this.horario = doc.data().horario;
             this.tipo = doc.data().tipo;
+            this.abrigoRealizador = doc.data().abrigoRealizador;
           });
         });
     },
@@ -97,13 +99,31 @@ export default {
           usuarioLogado = firebase.auth().currentUser
           
           if(usuarioLogado){
-            db.collection("abrigo").doc(this.id_abrigo).collection("seguidores").set({
+             db.collection("eventos")
+        .where("id_abrigo", "==", this.$route.params.id_abrigo)
+        .get()
+        .then(querySnapshot => {
+          querySnapshot.forEach(doc => {
+            this.id_abrigo = doc.data().id_abrigo;
+
+            db.collection("abrigo").doc(this.id_abrigo).collection("seguidores").doc(usuarioLogado.uid).set({
               emailSeguidor : usuarioLogado.email,
               idSeguidor : usuarioLogado.uid
+            });
+        });
             }).then(
-              db.collection("usuario").doc(usuarioLogado.uid).collection("inscricoes").set({
-                nomeSeguido : this.nome,
+                 db.collection("eventos")
+        .where("id_abrigo", "==", this.$route.params.id_abrigo)
+        .get()
+        .then(querySnapshot => {
+          querySnapshot.forEach(doc => {
+            this.id_abrigo = doc.data().id_abrigo;            
+            this.abrigoRealizador = doc.data().abrigoRealizador;
+              db.collection("usuario").doc(usuarioLogado.uid).collection("inscricoes").doc(usuarioLogado.uid).set({
+                nomeSeguido : this.abrigoRealizador,
                 idSeguido : this.id_abrigo
+                });
+        });
               })
             )
 
