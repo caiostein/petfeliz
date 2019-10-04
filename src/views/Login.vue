@@ -27,13 +27,19 @@
 
 <script>
     import firebase from 'firebase'
-import { Script } from 'vm';
+    import db from '../components/firebaseInit'
+    import { Script } from 'vm';
+    
+    var usuarioLogado
+
     export default {
         name: "login",
         data(){
             return {
                 email: '',
-                password: ''
+                password: '',
+                nome: '',
+                photoURL: null
             };
         },
         methods: {
@@ -46,13 +52,38 @@ import { Script } from 'vm';
                         alert('Opa! '+err.message)
                     }
                 );
-
             },
+
+            criaUsuario(){
+                usuarioLogado = firebase.auth().currentUser
+                if (usuarioLogado) {
+                    //User logged in already or has just logged in.
+                    
+                    db.collection('usuario').doc(usuarioLogado.uid).set({
+                        email:usuarioLogado.email,
+                        nome:usuarioLogado.displayName,
+                        photoURL:usuarioLogado.photoURL
+                    })
+                };
+            },
+            
 
         socialLogin() {
             const provider = new firebase.auth.GoogleAuthProvider();
-
+            
             firebase.auth().signInWithPopup(provider).then((result) => {
+
+            usuarioLogado = firebase.auth().currentUser
+                if (usuarioLogado) {
+                    //User logged in already or has just logged in.
+                    
+                    db.collection('usuario').doc(usuarioLogado.uid).set({
+                        email:usuarioLogado.email,
+                        nome:usuarioLogado.displayName,
+                        photoURL:usuarioLogado.photoURL
+                    })
+                }
+
             this.$router.replace('home');
             location.reload();
             }).catch((err) => {
