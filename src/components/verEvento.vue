@@ -10,13 +10,14 @@
       <li class="collection-item">Data de realização do Evento: {{data}}</li>
       <li class="collection-item">Horário de início do Evento: {{horario}}</li>
       <li class="collection-item">Tipo do Evento: {{tipo}}</li>
+      <li class="collection-item"> <router-link to = "/verAbrigo" class="btn blue"> Abrigo Realizador </router-link> </li>
     </ul>
     <router-link to="../listaEventos" class="btn grey">Back</router-link>
     <button @click="deletarEvento" class="btn red">Delete</button>
 
     <div class="fixed-action-btn">
       <router-link
-        v-bind:to="{name: 'editarEvento', params:{id_evento:id_evento}}"
+        v-bind:to="{name: 'editarEvento', params:{id_abrigo:id_abrigo}}"
         class="btn-floating btn-large blue"
       >
         <i class="fa fa-pencil"></i>
@@ -31,7 +32,7 @@ export default {
   name: "verEvento",
   data() {
     return {
-      id_evento: null,
+      id_abrigo: null,
       nome: null,
       descricao: null,
       local: null,
@@ -43,12 +44,12 @@ export default {
   },
   beforeRouteEnter(to, from, next) {
     db.collection("eventos")
-      .where("id_evento", "==", to.params.id_evento)
+      .where("id_abrigo", "==", to.params.id_abrigo)
       .get()
       .then(querySnapshot => {
         querySnapshot.forEach(doc => {
           next(vm => {
-            vm.id_evento = doc.data().id_evento;
+            vm.id_abrigo = doc.data().id_abrigo;
             vm.nome = doc.data().nome;
             vm.descricao = doc.data().descricao;
             vm.local = doc.data().local;
@@ -66,11 +67,11 @@ export default {
   methods: {
     fetchData() {
       db.collection("eventos")
-        .where("id_evento", "==", this.$route.params.id_evento)
+        .where("id_abrigo", "==", this.$route.params.id_abrigo)
         .get()
         .then(querySnapshot => {
           querySnapshot.forEach(doc => {
-            this.id_evento = doc.data().id_evento;
+            this.id_abrigo = doc.data().id_abrigo;
             this.nome = doc.data().nome;
             this.descricao = doc.data().descricao;
             this.local = doc.data().local;
@@ -83,7 +84,7 @@ export default {
     deletarEvento() {
       if (confirm("Tem certeza?")) {
         db.collection("eventos")
-          .where("id_evento", "==", this.$route.params.id_evento)
+          .where("id_abrigo", "==", this.$route.params.id_abrigo)
           .get()
           .then(querySnapshot => {
             querySnapshot.forEach(doc => {

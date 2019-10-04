@@ -3,12 +3,7 @@
         <h3>Novo Evento</h3>
         <div class="row">
         <form @submit.prevent="salvarEvento" class="col s12">
-            <div class="row">
-                <div class="input-field col s12">
-                <input type="text" v-model="id_evento" required>
-                <label>ID do Evento:</label>
-                </div>    
-            </div>
+            
              <div class="row">
                 <div class="input-field col s12">
                 <input type="text" v-model="nome" required>
@@ -64,7 +59,7 @@ export default{
     name: 'novoEvento',
     data(){
         return {
-            id_evento: null,
+            id_abrigo: null,
             nome:null,
             descricao:null,
             local:null,
@@ -77,7 +72,7 @@ export default{
     methods: {
         salvarEvento(){
             db.collection('eventos').add({
-                id_evento: this.id_evento,
+                id_abrigo: firebase.auth().currentUser.uid,
                 nome: this.nome,
                 descricao: this.descricao,
                 local: this.local,

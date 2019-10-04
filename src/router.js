@@ -13,6 +13,7 @@ import novoAnimal from '@/components/novoAnimal'
 import listaAnimais from '@/components/listaAnimais'
 import verAnimal from '@/components/verAnimal'
 import editarAnimal from '@/components/editarAnimal'
+import verAbrigo from '@/components/verAbrigo'
 import firebase from "firebase"
 
 
@@ -55,6 +56,14 @@ const router = new Router({
             path: '/verEvento/:id_evento',
             name: 'verEvento',
             component: verEvento,
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
+            path: '/verAbrigo',
+            name: 'verAbrigo',
+            component: verAbrigo,
             meta: {
                 requiresAuth: true
             }

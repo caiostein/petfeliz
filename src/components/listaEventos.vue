@@ -6,7 +6,7 @@
              v-bind:key="evento.id" class="collection-item">
              {{evento.nome}}
 
-             <router-link class="secondary-content" v-bind:to="{name: 'verEvento', params:{id_evento: evento.id_evento}}">
+             <router-link class="secondary-content" v-bind:to="{name: 'verEvento', params:{id_abrigo: evento.id_abrigo}}">
                  <i class="fa fa-eye"></i>
              </router-link>
              </li>
@@ -45,7 +45,7 @@ export default{
                 querrySnapshot.forEach(doc => {
                     const data = {
                         'id': doc.id,
-                        'id_evento':doc.data().id_evento,
+                        'id_abrigo':doc.data().id_abrigo,
                         'nome':doc.data().nome,
                         'local':doc.data().local,
                         'tipo':doc.data().tipo,
