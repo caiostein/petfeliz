@@ -39,25 +39,29 @@ export default{
        
 
         created(){
-            if(firebase.auth().currentUser){
-                this.usuarioEstaLogado = true;
-                this.usuarioLogado = firebase.auth().currentUser.email;
-            }
-            db.collection('animal').orderBy('nome').get().then(querrySnapshot =>{
-                querrySnapshot.forEach(doc => {
-                    const data = {
-                        'id': doc.id,
-                        'id_animal':doc.data().id_animal,
-                        'nome':doc.data().nome,
-                        'tipo':doc.data().tipo,
-                        'raca':doc.data().raca,
-                        'idade': doc.data().idade,
-                        'foto': doc.data().foto,
-                        'abrigoDono': doc.data().abrigoDono
-                    }
-                    this.animal.push(data)
-                })
+
+            firebase.auth().onAuthStateChanged((user) => {
+                if(user){
+                    db.collection('abrigo').doc(user.uid).collection('animal')
+                        .get()
+                        .then(querrySnapshot=>{
+                            querrySnapshot.forEach(doc =>{
+                                const data = {
+                                    'id': doc.id,
+                                    'id_animal':doc.data().id_animal,
+                                    'nome':doc.data().nome,
+                                    'tipo':doc.data().tipo,
+                                    'raca':doc.data().raca,
+                                    'idade': doc.data().idade,
+                                    'foto': doc.data().foto,
+                                    'abrigoDono': doc.data().abrigoDono
+                                }
+                                this.animal.push(data)
+                            })
+                        })                    
+                }
             })
+
         },
     
 

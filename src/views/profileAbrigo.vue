@@ -1,19 +1,28 @@
 <template>
-  <div class="profile">
-      <div id="profileUser">          
-          <h1>Perfil do Abrigo {{nome}}</h1>          
-          <ul class="collection with-header">
-          <li class = "collection-item">Nome do Abrigo: {{nome}}</li>
-          <li class = "collection-item">Email de contato: {{email}}</li>
-          <li class = "collection-item">Telefone de contato: {{telefone}}</li>
-          <li class = "collection-item">Endereço: {{endereco}}</li>  
-</ul>
-         <div class="center-align">
-             <br><br>
-          <button class="btn waves-effect waves-light red" @click="deleteUser">Deletar Abrigo</button>
-      </div>
-      </div>
-  </div>
+    <div class="profile">
+        <div id="profileUser">          
+            <h1>Perfil do Abrigo {{nome}}</h1>          
+            <ul class="collection with-header">
+                <li class = "collection-item">Nome do Abrigo: {{nome}}</li>
+                <li class = "collection-item">Email de contato: {{email}}</li>
+                <li class = "collection-item">Telefone de contato: {{telefone}}</li>
+                <li class = "collection-item">Endereço: {{endereco}}</li>  
+            </ul>
+            <div class="center-align">
+            <br><br>
+                <button class="btn waves-effect waves-light red" @click="deleteUser">Deletar Abrigo</button>
+            </div>
+            <div id="listaSeguidores">
+                <ul class="collection with-header">
+                    <li class="collection-header"><h4>Seguidores:</h4></li>
+                    <li v-for="seguidor in seguidores"
+                    v-bind:key="seguidor.id" class="collection-item">
+                    {{seguidor.emailSeguidor}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </template>
 
 
@@ -30,23 +39,43 @@
             nome:null,
             email:null,
             telefone:null,
-            endereco:null
+            endereco:null,
+            seguidores: []
            };
         },
 
         created(){
-           if(firebase.auth().currentUser){
-           db.collection('abrigo')
-            .doc(treco.uid)
-            .get()
-            .then(snapshot => {
-                const document = snapshot.data()
-                this.nome = document.nome;
-                this.email = document.email;
-                this.telefone = document.telefone;
-                this.endereco = document.endereco;
+            firebase.auth().onAuthStateChanged((user) => {
+                if(user){
+                    db.collection('abrigo').doc(user.uid).collection('seguidores')
+                        .get()
+                        .then(querrySnapshot=>{
+                            querrySnapshot.forEach(doc =>{
+                                const data = {
+                                    'idSeguidor': doc.data().idSeguidor,
+                                    'emailSeguidor': doc.data().emailSeguidor
+                                }
+                                this.seguidores.push(data)
+                            })
+                        })
+                    db.collection('abrigo')
+                    .doc(treco.uid)
+                    .get()
+                    .then(snapshot => {
+                        const document = snapshot.data()
+                        this.nome = document.nome;
+                        this.email = document.email;
+                        this.telefone = document.telefone;
+                        this.endereco = document.endereco;
+                    })
+                    
+                }
             })
-        }},
+                
+                
+            
+            
+        },
 
         methods:{
             deleteUser(){
