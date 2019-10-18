@@ -10,10 +10,23 @@
       <li class="collection-item">Data de realização do Evento: {{data}}</li>
       <li class="collection-item">Horário de início do Evento: {{horario}}</li>
       <li class="collection-item">Tipo do Evento: {{tipo}} </li>
+      <li class="collection-item"> <button class="btn red" @click="desconfirmarPresenca" v-if="usuarioEstaConfirmado"> Desconfirmar Presença </button>
+        <button v-else class="btn green" @click="confirmarPresenca"> Confirmar Presença </button>
+      </li>
       <li class="collection-item">Abrigo Realizador: {{abrigoRealizador}}<br><br>
-      <router-link to = "/verAbrigo" class="btn blue"> Página do Abrigo Realizador </router-link>
+      <router-link to = "/verAbrigo" class="btn blue"> Página do Abrigo Realizador </router-link> <br> <br>
       <button @click="seguirAbrigo" class="btn blue">Seguir Abrigo</button></li>
     </ul>
+
+    <div id="listaConfirmados">
+                <ul class="collection with-header">
+                    <li class="collection-header"><h4>Confirmados:</h4></li>
+                    <li v-for="confirmado in confirmados"
+                    v-bind:key="confirmado.id" class="collection-item">
+                    {{confirmado.emailConfirmado}}
+                    </li>
+                </ul>
+    </div>
     
     <router-link to="../listaEventos" class="btn grey">Voltar</router-link>
     <button @click="deletarEvento" class="btn red">Excluir Evento</button>
@@ -47,7 +60,9 @@ export default {
       local: null,
       data:null,
       horario:null,
-      tipo: null
+      tipo: null,
+      confirmados: [],
+      usuarioEstaConfirmado: false
       
     };
   },
@@ -69,10 +84,55 @@ export default {
             
           });
         });
-      });
+      }
+      );
   },
   watch: {
     $route: "fetchData"
+  },
+  created(){
+    firebase.auth().onAuthStateChanged((user) => {
+      if(user){
+
+        db.collection("eventos")
+        .where("id_abrigo", "==", this.$route.params.id_abrigo)
+        .get()
+        .then(querySnapshot => {
+          querySnapshot.forEach(doc => {
+            
+            db.collection('eventos').doc(doc.id).collection('confirmados')
+                        .get()
+                        .then(querrySnapshot=>{
+                            querrySnapshot.forEach(doc =>{
+                                const data = {
+                                    'emailConfirmado': doc.data().emailConfirmado,
+                                    'idConfirmado': doc.data().idConfirmado                                    
+                                }
+                                
+                                this.confirmados.push(data);
+                                
+                            })
+                        }
+                        
+                        )
+            db.collection('eventos').doc(doc.id).collection('confirmados')
+                        .get()
+                        .then(querrySnapshot=>{
+                            querrySnapshot.forEach(doc =>{
+                                if(doc.data().emailConfirmado == user.email){
+                                  this.usuarioEstaConfirmado = true;
+                                }
+                            })
+                        }
+                        
+                        )
+        });
+            })
+
+
+            
+      }
+    })
   },
 
   methods: {
@@ -119,10 +179,11 @@ export default {
           querySnapshot.forEach(doc => {
             this.id_abrigo = doc.data().id_abrigo;            
             this.abrigoRealizador = doc.data().abrigoRealizador;
-              db.collection("usuario").doc(usuarioLogado.uid).collection("inscricoes").doc(usuarioLogado.uid).set({
+              db.collection("usuario").doc(usuarioLogado.uid).collection("inscricoes").doc(this.id_abrigo).set({
                 nomeSeguido : this.abrigoRealizador,
                 idSeguido : this.id_abrigo
                 });
+                this.$router.push("../listaEventos");
         });
               })
             )
@@ -130,6 +191,74 @@ export default {
           }
 
         }
+    },
+
+    confirmarPresenca(){
+        if(confirm("Deseja confirmar presença?")){
+          usuarioLogado = firebase.auth().currentUser
+          
+          if(usuarioLogado){
+             db.collection("eventos")
+        .where("id_abrigo", "==", this.$route.params.id_abrigo)
+        .get()
+        .then(querySnapshot => {
+          querySnapshot.forEach(doc => {
+            this.id_abrigo = doc.data().id_abrigo;
+            
+            db.collection("eventos").doc(doc.id).collection("confirmados").doc(usuarioLogado.uid).set({
+              emailConfirmado : usuarioLogado.email,
+              idConfirmado : usuarioLogado.uid
+            });
+        });
+            }).then(
+                 db.collection("eventos")
+        .where("id_abrigo", "==", this.$route.params.id_abrigo)
+        .get()
+        .then(querySnapshot => {
+          querySnapshot.forEach(doc => {
+            this.id_abrigo = doc.data().id_abrigo;            
+            this.abrigoRealizador = doc.data().nome;
+              db.collection("usuario").doc(usuarioLogado.uid).collection("confirmacoes").doc(doc.id).set({
+                nomeEvento : this.nome,
+                idEvento : doc.id
+                });
+                this.$router.push("../listaEventos");
+        });
+              })
+            )
+
+          }
+
+        }
+    },
+
+    desconfirmarPresenca(){
+      if(confirm("Deseja Desconfirmar Presença?")){
+        usuarioLogado = firebase.auth().currentUser
+        db.collection("eventos")
+        .where("id_abrigo", "==", this.$route.params.id_abrigo)
+        .get()
+        .then(querySnapshot => {
+          querySnapshot.forEach(doc => {
+            this.id_abrigo = doc.data().id_abrigo;
+            
+            db.collection("eventos").doc(doc.id).collection("confirmados").doc(usuarioLogado.uid).delete()
+        });
+            }).then(
+                 db.collection("eventos")
+        .where("id_abrigo", "==", this.$route.params.id_abrigo)
+        .get()
+        .then(querySnapshot => {
+          querySnapshot.forEach(doc => {
+            this.id_abrigo = doc.data().id_abrigo;            
+            this.abrigoRealizador = doc.data().nome;
+              db.collection("usuario").doc(usuarioLogado.uid).collection("confirmacoes").doc(doc.id).delete();
+              this.$router.push("../listaEventos");
+        });
+              })
+            )
+
+      }
     },
 
     deletarEvento() {

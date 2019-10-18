@@ -15,6 +15,7 @@ import verAnimal from '@/components/verAnimal'
 import editarAnimal from '@/components/editarAnimal'
 import verAbrigo from '@/components/verAbrigo'
 import firebase from "firebase"
+import Feed from '@/components/Feed'
 
 
 
@@ -43,6 +44,14 @@ const router = new Router({
                 requiresAuth: true
             }
         },
+        {
+            path: '/Feed',
+            name: 'Feed',
+            component: Feed,
+            meta: {
+                requiresAuth: true
+            }
+        },
 
         {
             path: '/editarEvento/:id_evento',
@@ -60,6 +69,7 @@ const router = new Router({
                 requiresAuth: true
             }
         },
+        
         {
             path: '/verAbrigo',
             name: 'verAbrigo',
