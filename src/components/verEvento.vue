@@ -47,6 +47,8 @@
 import firebase from "firebase"
 import db from "./firebaseInit"
 
+var user
+
  $(document).ready(function(){
     $('.collapsible').collapsible();
   });
@@ -77,6 +79,7 @@ export default {
     };
   },
   beforeRouteEnter(to, from, next) {
+    user = firebase.auth().currentUser
     db.collection("eventos")
       .where("id_abrigo", "==", to.params.id_abrigo)
       .get()
