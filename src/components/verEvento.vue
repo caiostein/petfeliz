@@ -18,15 +18,13 @@
       <button @click="seguirAbrigo" class="btn blue">Seguir Abrigo</button></li>
     </ul>
 
-    <div id="listaConfirmados">
-                <ul class="collection with-header">
-                    <li class="collection-header"><h4>Confirmados:</h4></li>
-                    <li v-for="confirmado in confirmados"
-                    v-bind:key="confirmado.id" class="collection-item">
-                    {{confirmado.emailConfirmado}}
-                    </li>
-                </ul>
-    </div>
+  <ul class="collapsible">
+    <li >
+      <div class="collapsible-header"><i class="material-icons">place</i>Usuários Confirmados</div>
+      <div v-for="confirmado in confirmados"
+                    v-bind:key="confirmado.id" class="collapsible-body"><span>{{confirmado.emailConfirmado}}</span></div>
+    </li>
+  </ul>
     
     <router-link to="../listaEventos" class="btn grey">Voltar</router-link>
     <button @click="deletarEvento" class="btn red">Excluir Evento</button>
@@ -46,6 +44,15 @@
 <script>
 import firebase from "firebase"
 import db from "./firebaseInit"
+
+ $(document).ready(function(){
+    $('.collapsible').collapsible();
+  });
+
+ document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.collapsible');
+    var instances = M.Collapsible.init(elems, options);
+  });
 
 var usuarioLogado
 
@@ -91,6 +98,14 @@ export default {
     $route: "fetchData"
   },
   created(){
+    $(document).ready(function(){
+    $('.collapsible').collapsible();
+  });
+
+ document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.collapsible');
+    var instances = M.Collapsible.init(elems, options);
+  });
     firebase.auth().onAuthStateChanged((user) => {
       if(user){
 

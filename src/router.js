@@ -16,6 +16,7 @@ import editarAnimal from '@/components/editarAnimal'
 import verAbrigo from '@/components/verAbrigo'
 import firebase from "firebase"
 import Feed from '@/components/Feed'
+import verSeguidores from '@/components/verSeguidores'
 
 
 
@@ -48,6 +49,14 @@ const router = new Router({
             path: '/Feed',
             name: 'Feed',
             component: Feed,
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
+            path: '/Seguidores',
+            name: 'verSeguidores',
+            component: verSeguidores,
             meta: {
                 requiresAuth: true
             }
