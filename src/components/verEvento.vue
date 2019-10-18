@@ -10,27 +10,29 @@
       <li class="collection-item">Data de realização do Evento: {{data}}</li>
       <li class="collection-item">Horário de início do Evento: {{horario}}</li>
       <li class="collection-item">Tipo do Evento: {{tipo}} </li>
-      <li class="collection-item"> <button class="btn red" @click="desconfirmarPresenca" v-if="usuarioEstaConfirmado"> Desconfirmar Presença </button>
-        <button v-else class="btn green" @click="confirmarPresenca"> Confirmar Presença </button>
-      </li>
+      
       <li class="collection-item">Abrigo Realizador: {{abrigoRealizador}}<br><br>
       <router-link to = "/verAbrigo" class="btn blue"> Página do Abrigo Realizador </router-link> <br> <br>
       <button @click="seguirAbrigo" class="btn blue">Seguir Abrigo</button></li>
+
+      <li class="collection-item"> <button class="btn red" @click="desconfirmarPresenca" v-if="usuarioEstaConfirmado"> Desconfirmar Presença </button>
+        <button v-else class="btn green" @click="confirmarPresenca"> Confirmar Presença </button>
+      </li>
     </ul>
 
   <ul class="collapsible">
     <li >
-      <div class="collapsible-header"><i class="material-icons">place</i>Usuários Confirmados</div>
+      <div class="collapsible-header"><i class="material-icons">account_circle</i>Usuários Confirmados: {{confirmados.lenght}}</div>
       <div v-for="confirmado in confirmados"
                     v-bind:key="confirmado.id" class="collapsible-body"><span>{{confirmado.emailConfirmado}}</span></div>
     </li>
   </ul>
     
     <router-link to="../listaEventos" class="btn grey">Voltar</router-link>
-    <button @click="deletarEvento" class="btn red">Excluir Evento</button>
+    <button v-if="usuarioDono" @click="deletarEvento" class="btn red">Excluir Evento</button>
 
 
-    <div class="fixed-action-btn">
+    <div v-if="usuarioDono" class="fixed-action-btn">
       <router-link
         v-bind:to="{name: 'editarEvento', params:{id_abrigo:id_abrigo}}"
         class="btn-floating btn-large blue"
@@ -69,7 +71,8 @@ export default {
       horario:null,
       tipo: null,
       confirmados: [],
-      usuarioEstaConfirmado: false
+      usuarioEstaConfirmado: false,
+      usuarioDono: false
       
     };
   },
@@ -88,7 +91,9 @@ export default {
             vm.data = doc.data().data;
             vm.horario = doc.data().horario;
             vm.tipo = doc.data().tipo;
-            
+            if(vm.id_abrigo == user.uid){
+              vm.usuarioDono = true;
+            }
           });
         });
       }
@@ -123,7 +128,6 @@ export default {
                                     'emailConfirmado': doc.data().emailConfirmado,
                                     'idConfirmado': doc.data().idConfirmado                                    
                                 }
-                                
                                 this.confirmados.push(data);
                                 
                             })

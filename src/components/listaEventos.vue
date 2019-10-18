@@ -14,12 +14,12 @@
          
         
      
-     <div class="fixed-action-btn">
-         <router-link to="/new" class = "btn-floating btn-large red">
-         <i class="fa fa-plus"></i>
-</router-link>
+        <div v-if="abrigoEstaLogado" class="fixed-action-btn">
+            <router-link to="/new" class = "btn-floating btn-large red">
+            <i class="fa fa-plus"></i>
+            </router-link>
+        </div>
     </div>
-     </div>
 </template>
 
 <script>
@@ -33,6 +33,7 @@ export default{
             return {
                 usuarioEstaLogado: false,
                 usuarioLogado: false,
+                abrigoEstaLogado: false,
                 eventos: []
             }
         },
@@ -41,6 +42,21 @@ export default{
                 this.usuarioEstaLogado = true;
                 this.usuarioLogado = firebase.auth().currentUser.email;
             }
+            
+            var usersRef = db.collection('abrigo').doc(firebase.auth().currentUser.uid)
+            if(firebase.auth().currentUser){
+                usersRef.get().then((docSnapshot) => {
+                    if(docSnapshot.exists) {
+                        usersRef.onSnapshot((doc) => {
+                            this.abrigoEstaLogado = true;
+                        })
+                    } else {
+                            this.usuarioEstaLogado = true;
+                    }
+                })
+                this.usuarioLogado = firebase.auth().currentUser.email;
+            }
+
             db.collection('eventos').orderBy('nome').get().then(querrySnapshot =>{
                 querrySnapshot.forEach(doc => {
                     const data = {
