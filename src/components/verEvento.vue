@@ -15,14 +15,14 @@
       <router-link to = "/verAbrigo" class="btn blue"> Página do Abrigo Realizador </router-link> <br> <br>
       <button @click="seguirAbrigo" class="btn blue">Seguir Abrigo</button></li>
 
-      <li class="collection-item"> <button class="btn red" @click="desconfirmarPresenca" v-if="usuarioEstaConfirmado"> Desconfirmar Presença </button>
+      <li class="collection-item"> <button class="btn red" @click="desconfirmarPresenca" v-if="usuarioEstaConfirmado"> Cancelar Confirmação </button>
         <button v-else class="btn green" @click="confirmarPresenca"> Confirmar Presença </button>
       </li>
     </ul>
 
   <ul class="collapsible">
     <li >
-      <div class="collapsible-header"><i class="material-icons">account_circle</i>Usuários Confirmados: {{confirmados.lenght}}</div>
+      <div class="collapsible-header"><i class="material-icons">account_circle</i>Visualizar Usuários Confirmados: {{confirmados.lenght}}</div>
       <div v-for="confirmado in confirmados"
                     v-bind:key="confirmado.id" class="collapsible-body"><span>{{confirmado.emailConfirmado}}</span></div>
     </li>

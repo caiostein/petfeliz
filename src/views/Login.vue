@@ -10,7 +10,7 @@
 
         <br><br><br>
 
-        <h4>Login Institucional:</h4>
+        <h4>Login de Abrigo:</h4>
 
         <input type="text" v-model="email" placeholder="Email" class="validate"><br>
         <input type="password" v-model="password" placeholder="Senha" class="validate"><br>
