@@ -39,7 +39,7 @@
                    
                  <div class="input-field col s12">
             <select v-model="selected">
-                <option value="" disabled selected>Escolha o tipo</option>
+                <option value="" disabled selected>Escolha o Tipo</option>
                 <option value="Adoção">Adoção</option>
                 <option value="Recolhimento">Recolhimento</option>
             </select>
