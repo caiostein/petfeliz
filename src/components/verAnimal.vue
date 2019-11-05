@@ -26,6 +26,7 @@
 
 <script>
 import db from "./firebaseInit";
+import firebase from 'firebase';
 export default {
     name: "verAnimal",
     data() {
@@ -40,7 +41,9 @@ export default {
         };
     },
   beforeRouteEnter(to, from, next) {
-      db.collection("animal") //db.collection('abrigo').doc(user.uid).collection('animal')
+    var user = firebase.auth().currentUser
+    if(user){
+      db.collection('abrigo').doc(user.uid).collection('animal')
         .where("id_animal", "==", to.params.id_animal)
         .get()
         .then(querySnapshot => {
@@ -56,13 +59,16 @@ export default {
             });
           });
         });
-    },
+    }
+  },
   watch: {
     $route: "fetchData"
   },
   methods: {
     fetchData() {
-      db.collection("animal")
+      var user = firebase.auth().currentUser
+      if(user){
+      db.collection('abrigo').doc(user.uid).collection('animal')
         .where("id_animal", "==", this.$route.params.id_animal)
         .get()
         .then(querySnapshot => {
@@ -76,10 +82,13 @@ export default {
             this.abrigoDono = doc.data().abrigoDono;
           });
         });
+    }
     },
     deletarAnimal() {
+      var user = firebase.auth().currentUser
+      if(user){
       if (confirm("Tem certeza que deseja deletar esse animal?")) {
-        db.collection("animal")
+        db.collection('abrigo').doc(user.uid).collection('animal')
           .where("id_animal", "==", this.$route.params.id_animal)
           .get()
           .then(querySnapshot => {
@@ -91,6 +100,7 @@ export default {
       }
     }
   }
+}
 };
 </script>
 

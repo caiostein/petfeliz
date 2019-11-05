@@ -63,7 +63,7 @@ const router = new Router({
         },
 
         {
-            path: '/editarEvento/:id_evento',
+            path: '/editarEvento/',
             name: 'editarEvento',
             component: editarEvento,
             meta: {
@@ -71,7 +71,7 @@ const router = new Router({
             }
         },
         {
-            path: '/verEvento/:id_evento',
+            path: '/verEvento/',
             name: 'verEvento',
             component: verEvento,
             meta: {
