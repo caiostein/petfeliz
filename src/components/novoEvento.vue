@@ -2,8 +2,9 @@
     <div id="novoEvento">
         <h3>Novo Evento</h3>
         <div class="row">
-        <form @submit.prevent="salvarEvento" class="col s12">
-            
+    <form @submit.prevent="salvarEvento" class="col s12">
+                      
+           
              <div class="row">
                 <div class="input-field col s12">
                 <input type="text" v-model="nome" required>
@@ -35,14 +36,20 @@
                 </div>    
             </div>
              <div class="row">
-                <div class="input-field col s12">
-                <input type="text" v-model="tipo" required>
-                <label>Tipo do Evento (Adoção ou Recolhimento):</label>
-                </div>    
-            </div>
-            <router-link to="/" class="btn grey">Cancel</router-link>
-            <button type="submit" class="btn">Submit</button>           
-        </form>
+                   
+                 <div class="input-field col s12">
+            <select v-model="selected">
+                <option value="" disabled selected>Escolha o tipo</option>
+                <option value="Adoção">Adoção</option>
+                <option value="Recolhimento">Recolhimento</option>
+            </select>
+    <label>Tipo do Evento</label>
+    
+  </div>
+    </div>
+        <router-link to="/" class="btn grey">Cancel</router-link>
+        <button type="submit" class="btn">Submit</button>           
+    </form>
             
         </div>
     </div>
@@ -53,12 +60,17 @@
     import db from './firebaseInit'
     import firebase from 'firebase'
 
+
+  $(document).ready(function(){
+    $('select').formSelect();
+  });
     
 
 export default{
     name: 'novoEvento',
     data(){
         return {
+            selected: '',
             id_abrigo: null,
             nome:null,
             descricao:null,
@@ -69,6 +81,14 @@ export default{
             abrigoRealizador: null
         }
     },
+
+    created() {
+       $(document).ready(function(){
+    $('select').formSelect();
+  });
+    },
+
+
     methods: {
         salvarEvento(){
             db.collection('eventos').add({
@@ -78,7 +98,7 @@ export default{
                 local: this.local,
                 data: this.data,
                 horario: this.horario,
-                tipo: this.tipo,
+                tipo: this.selected,
                 abrigoRealizador:  firebase.auth().currentUser.email
 
             })

@@ -17,7 +17,8 @@ import verAbrigo from '@/components/verAbrigo'
 import firebase from "firebase"
 import Feed from '@/components/Feed'
 import verSeguidores from '@/components/verSeguidores'
-
+import filtroAdocao from '@/components/filtroAdocao'
+import filtroRecolhimento from '@/components/filtroRecolhimento'
 
 
 Vue.use(Router)
@@ -41,6 +42,22 @@ const router = new Router({
             path: '/listaEventos',
             name: 'listaEventos',
             component: listaEventos,
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
+            path: '/filtroAdocao',
+            name: 'filtroAdocao',
+            component: filtroAdocao,
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
+            path: '/filtroRecolhimento',
+            name: 'filtroRecolhimento',
+            component: filtroRecolhimento,
             meta: {
                 requiresAuth: true
             }

@@ -1,13 +1,11 @@
 <template>
     <div id="listaEventos">         
-           <br>
-                      
-         <ul class="collection with-header">
-             <li class="collection-header">
-                 <h4>Todos os Eventos</h4> 
-                 <router-link to="/listaEventos" class="waves-effect waves-light btn-small disabled"
+         <br>
+          <ul class="collection with-header">
+             <li class="collection-header"><h4>Eventos de Adoção</h4> 
+             <router-link to="/listaEventos" class="waves-effect waves-light btn-small"
                   style="margin-right: 10px">Todos</router-link>
-             <router-link to="/filtroAdocao" class="waves-effect waves-light btn-small"
+             <router-link to="/filtroAdocao" class="waves-effect waves-light btn-small disabled"
                   style="margin-right: 10px">Adoção</router-link> <router-link to="/filtroRecolhimento" 
                   class="waves-effect waves-light btn-small">Recolhimento
                   </router-link>
@@ -66,7 +64,7 @@ export default{
                 this.usuarioLogado = firebase.auth().currentUser.email;
             }
 
-            db.collection('eventos').orderBy('nome').get().then(querrySnapshot =>{
+            db.collection('eventos').where("tipo", "==", "Adoção").get().then(querrySnapshot =>{
                 querrySnapshot.forEach(doc => {
                     const data = {
                         'id': doc.id,

@@ -10,7 +10,8 @@
                     <li v-else-if="abrigoEstaLogado"><router-link to="/home">Página Inicial</router-link></li>
                     <li v-if="usuarioEstaLogado"><router-link to="/listaEventos">Feed</router-link></li>
                     <li v-if="abrigoEstaLogado"><router-link to="/listaAnimais">Animais Registrados</router-link></li>
-                    <li v-if="abrigoEstaLogado"><router-link to="/listaEventos">Lista de Eventos</router-link></li>
+                    <li v-if="abrigoEstaLogado"><router-link to="/listaEventos">Lista de Eventos</router-link></li>                  
+
                     <li v-if="usuarioEstaLogado"><a v-on:click="logout" class="waves-effect waves-light btn red">Sair</a></li>
                     <li v-else-if="abrigoEstaLogado"><a v-on:click="logout" class="waves-effect waves-light btn red">Sair</a></li>
                 </ul>
