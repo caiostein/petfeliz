@@ -1,11 +1,11 @@
 <template>
-    <div id="listaAnimais">         
-       <br>
+    <div id="listaAnimais">
+           <br>
           <ul class="collection with-header">
-             <li class="collection-header"><h4>Animais Registrados</h4> 
-             <router-link to="/listaAnimais" class="waves-effect waves-light btn-small disabled"
+             <li class="collection-header"><h4>Cachorros Registrados</h4> 
+             <router-link to="/listaAnimais" class="waves-effect waves-light btn-small"
                   style="margin-right: 10px">Todos</router-link>
-             <router-link to="/animaisCachorro" class="waves-effect waves-light btn-small"
+             <router-link to="/animaisCachorro" class="waves-effect waves-light btn-small disabled"
                   style="margin-right: 10px">Cachorros</router-link> <router-link to="/animaisGato" 
                   class="waves-effect waves-light btn-small" style="margin-right:10px">Gatos</router-link>
                   <router-link to="/animaisOutro" 
@@ -50,13 +50,13 @@ export default{
 
             firebase.auth().onAuthStateChanged((user) => {
                 if(user){
-                    db.collection('abrigo').doc(user.uid).collection('animal')
+                    db.collection('abrigo').doc(user.uid).collection('animal').where("tipo", "==", "Cachorro")
                         .get()
                         .then(querrySnapshot=>{
                             querrySnapshot.forEach(doc =>{
                                 const data = {
+                                    'id_animal' : doc.data().id_animal,
                                     'id': doc.id,
-                                    'id_animal':doc.data().id_animal,
                                     'nome':doc.data().nome,
                                     'tipo':doc.data().tipo,
                                     'raca':doc.data().raca,

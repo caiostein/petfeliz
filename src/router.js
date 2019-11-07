@@ -19,6 +19,9 @@ import Feed from '@/components/Feed'
 import verSeguidores from '@/components/verSeguidores'
 import filtroAdocao from '@/components/filtroAdocao'
 import filtroRecolhimento from '@/components/filtroRecolhimento'
+import animaisCachorro from '@/components/animaisCachorro'
+import animaisOutro from '@/components/animaisOutro'
+import animaisGato from '@/components/animaisGato'
 
 
 Vue.use(Router)
@@ -161,6 +164,33 @@ const router = new Router({
             path: '/listaAnimais',
             name: 'listaAnimais',
             component: listaAnimais,
+            meta: {
+                requiresAuth: true
+            }
+        },
+
+        {
+            path: '/animaisCachorro',
+            name: 'animaisCachorro',
+            component: animaisCachorro,
+            meta: {
+                requiresAuth: true
+            }
+        },
+
+        {
+            path: '/animaisOutro',
+            name: 'animaisOutro',
+            component: animaisOutro,
+            meta: {
+                requiresAuth: true
+            }
+        },
+
+        {
+            path: '/animaisGato',
+            name: 'animaisGato',
+            component: animaisGato,
             meta: {
                 requiresAuth: true
             }

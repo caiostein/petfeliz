@@ -47,7 +47,7 @@
     
   </div>
     </div>
-        <router-link to="/" class="btn grey">Cancel</router-link>
+        <router-link to="/listaEventos" class="btn grey" style="margin-right: 10px">Cancel</router-link>
         <button type="submit" class="btn">Submit</button>           
     </form>
             
@@ -102,9 +102,9 @@ export default{
                 abrigoRealizador:  firebase.auth().currentUser.email
 
             })
-            .then(docRef=> {
+            .then( 
                 this.$router.push('/listaEventos')
-            })
+            )
             .catch(error => {
                 console.log(err)
             })

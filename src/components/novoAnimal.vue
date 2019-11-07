@@ -3,7 +3,7 @@
         <h3>Novo Animal</h3>
         <div class="row">
         <form @submit.prevent="salvarAnimal" class="col s12">
-            <div class="row">
+             <div class="row">
                 <div class="input-field col s12">
                 <input type="text" v-model="id_animal" required>
                 <label>ID do Animal:</label>
@@ -17,9 +17,14 @@
             </div>
              <div class="row">
                 <div class="input-field col s12">
-                <input type="text" v-model="tipo" required>
-                <label>Tipo do animal:</label>  
-                </div>    
+            <select v-model="selected">
+                <option value="" disabled selected>Escolha o Tipo</option>
+                <option value="Cachorro">Cachorro</option>
+                <option value="Gato">Gato</option>                
+                <option value="Outro">Outro</option>
+            </select>
+    <label>Tipo do Animal</label>
+            </div>    
             </div>
              <div class="row">
                 <div class="input-field col s12">
@@ -40,7 +45,7 @@
                 </div>    
             </div>
              
-            <router-link to="/" class="btn grey">Cancel</router-link>
+            <router-link to="/listaAnimais" class="btn grey" style="margin-right: 10px">Cancel</router-link>
             <button type="submit" class="btn">Submit</button>           
         </form>
             
@@ -53,6 +58,10 @@
     import db from './firebaseInit'
     import firebase from 'firebase'
 
+
+       $(document).ready(function(){
+    $('select').formSelect();
+  });
     
 
 export default{
@@ -60,6 +69,7 @@ export default{
     data(){
         return {
             id_animal: null,
+            selected: '',
             nome:null,
             tipo:null,
             idade:null,
@@ -68,6 +78,13 @@ export default{
             abrigoDono: null
         }
     },
+
+    created() {
+       $(document).ready(function(){
+    $('select').formSelect();
+  });
+    },
+
     methods: {
         salvarAnimal(){
 
@@ -77,7 +94,7 @@ export default{
                         db.collection('abrigo').doc(user.uid).collection('animal').add({
                             id_animal: this.id_animal,
                             nome:this.nome,
-                            tipo:this.tipo,
+                            tipo:this.selected,
                             idade:this.idade,
                             raca:this.raca,
                             foto:this.foto,
@@ -85,9 +102,9 @@ export default{
                         })
                         
                         }
-                    }).then(docRef=> {
+                    }).then(
                     this.$router.push('/listaAnimais') 
-                })
+                )
                 .catch(error => {
                     console.log(err)
                 })

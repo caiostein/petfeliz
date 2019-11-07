@@ -28,7 +28,7 @@
     </li>
   </ul>
     
-    <router-link to="../listaEventos" class="btn grey">Voltar</router-link>
+    <router-link to="../listaEventos" class="btn grey" style = "margin-right: 10px">Voltar</router-link>
     <button v-if="usuarioDono" @click="deletarEvento" class="btn red">Excluir Evento</button>
 
 
