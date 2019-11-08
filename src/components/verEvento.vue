@@ -10,6 +10,8 @@
       <li class="collection-item">Data de realização do Evento: {{data}}</li>
       <li class="collection-item">Horário de início do Evento: {{horario}}</li>
       <li class="collection-item">Tipo do Evento: {{tipo}} </li>
+      <li class="collection-item">Latitude do local do Evento: {{lat}} </li>
+      <li class="collection-item">Longitude do local do Evento: {{long}} </li>
       
       <li class="collection-item">Abrigo Realizador: {{abrigoRealizador}}<br><br>
       <router-link to = "/verAbrigo" class="btn blue"> Página do Abrigo Realizador </router-link> <br> <br>
@@ -40,6 +42,26 @@
         <i class="fa fa-pencil"></i>
       </router-link>
     </div>
+
+     <div id= "mapaEventos">
+            <ul class="collection with-header">
+            <li class="collection-header"><h4>Mapa de Eventos Próximos</h4></li>
+            <GmapMap
+                :center="{lat:-22.9553543, lng:-43.1728785}"
+                :zoom="17"
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+                style="width: 1500px; height: 600px"
+            >
+                <GmapMarker
+                    
+                    :position="getPosition()"
+                    :clickable="true"
+                    :draggable="false"
+                    @click="center=m.point"
+                />
+            </GmapMap>
+            </ul>
+        </div>
   </div>
 </template>
 
@@ -60,6 +82,10 @@ var user
 
 var usuarioLogado
 
+var lat
+var long
+var coords
+
 export default {
   name: "verEvento",
   data() {
@@ -74,8 +100,9 @@ export default {
       tipo: null,
       confirmados: [],
       usuarioEstaConfirmado: false,
-      usuarioDono: false
-      
+      usuarioDono: false,
+      lat: null,
+      long: null
     };
   },
   beforeRouteEnter(to, from, next) {
@@ -94,6 +121,9 @@ export default {
             vm.data = doc.data().data;
             vm.horario = doc.data().horario;
             vm.tipo = doc.data().tipo;
+            vm.lat = doc.data().lat;
+            vm.long = doc.data().long;
+
             if(vm.id_abrigo == user.uid){
               vm.usuarioDono = true;
             }
@@ -108,6 +138,7 @@ export default {
   created(){
     $(document).ready(function(){
     $('.collapsible').collapsible();
+    this.fetchData();
   });
 
  document.addEventListener('DOMContentLoaded', function() {
@@ -172,6 +203,9 @@ export default {
             this.horario = doc.data().horario;
             this.tipo = doc.data().tipo;
             this.abrigoRealizador = doc.data().abrigoRealizador;
+            this.lat = doc.data().lat;
+            this.long = doc.data().long;
+            
           });
         });
     },
@@ -213,6 +247,13 @@ export default {
           }
 
         }
+    },
+
+    getPosition: function(){
+      return {
+        lat: parseFloat(this.lat),
+        lng: parseFloat(this.long)
+      }
     },
 
     confirmarPresenca(){

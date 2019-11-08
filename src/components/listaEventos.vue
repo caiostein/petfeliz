@@ -20,14 +20,14 @@
              </router-link>
              </li>
         </ul>
-         
-        
      
         <div v-if="abrigoEstaLogado" class="fixed-action-btn">
             <router-link to="/new" class = "btn-floating btn-large red">
             <i class="fa fa-plus"></i>
             </router-link>
         </div>
+
+      
     </div>
 </template>
 
@@ -74,9 +74,12 @@ export default{
                         'nome':doc.data().nome,
                         'local':doc.data().local,
                         'tipo':doc.data().tipo,
-                        'form': doc.data().form
+                        'form': doc.data().form,
+            
                     }
+           
                     this.eventos.push(data)
+
                 })
             })
         },

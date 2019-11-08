@@ -35,8 +35,20 @@
                 <label>Horário de início do Evento:</label>
                 </div>    
             </div>
+
+            <div class="row">
+                <div class="input-field col s12">
+                    <input type="text" v-model="lat" required>
+                    <label>Latitude do local do evento:</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input type="text" v-model="long" required>
+                    <label>Longitude do local do evento:</label>
+                </div>
+            </div>
              <div class="row">
-                   
                  <div class="input-field col s12">
             <select v-model="selected">
                 <option value="" disabled selected>Escolha o Tipo</option>
@@ -78,7 +90,9 @@ export default{
             data:null,
             horario:null,
             tipo:null,
-            abrigoRealizador: null
+            abrigoRealizador: null,
+            lat:null,
+            long:null
         }
     },
 
@@ -99,7 +113,9 @@ export default{
                 data: this.data,
                 horario: this.horario,
                 tipo: this.selected,
-                abrigoRealizador:  firebase.auth().currentUser.email
+                abrigoRealizador:  firebase.auth().currentUser.email,
+                lat: this.lat,
+                long: this.long
 
             })
             .then(docRef=> {
