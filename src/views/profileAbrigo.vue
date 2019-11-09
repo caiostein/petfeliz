@@ -1,7 +1,7 @@
 <template>
     <div class="profile">
         <div id="profileUser">          
-            <h1>Perfil do Abrigo {{nome}}</h1>          
+            <h2>Perfil do Abrigo {{nome}}</h2>          
             <ul class="collection with-header">
                 <li class = "collection-item">Nome do Abrigo: {{nome}}</li>
                 <li class = "collection-item">Email de contato: {{email}}</li>
@@ -25,6 +25,7 @@
     import Navbar from '@/components/Navbar'
     var treco = firebase.auth().currentUser
 
+
     export default {
         name:'profile',
         data(){
@@ -37,14 +38,12 @@
            };
         },
 
-        created(){
-            firebase.auth().onAuthStateChanged((user) => {
-                if(user){
-                    db.collection('abrigo').doc(user.uid).collection('seguidores')
-                        .get()
-                        
-                    db.collection('abrigo')
-                    .doc(treco.uid)
+
+
+      created(){
+      var user = firebase.auth().currentUser
+      db.collection('abrigo')
+                    .doc(user.uid)
                     .get()
                     .then(snapshot => {
                         const document = snapshot.data()
@@ -52,11 +51,9 @@
                         this.email = document.email;
                         this.telefone = document.telefone;
                         this.endereco = document.endereco;
+                        console.log(snapshot.data().nome)
                     })
-                    
-                }
-            })
-                
+
                 
             
             

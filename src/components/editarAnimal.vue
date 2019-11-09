@@ -1,6 +1,6 @@
 <template>
     <div id="editarAnimal">
-        <h3>Editar Animal</h3>
+        <h3>Editando Informações de {{nome}} <img class ="circle" width = "100" style="vertical-align:middle" :src=foto></h3>
         <div class="row">
         <form @submit.prevent="updateAnimal" class="col s12">
             
@@ -16,8 +16,14 @@
             </div>
              <div class="row">
                 <div class="input-field col s12">
-                <input type="text" v-model="tipo" required>
-                </div>    
+            <select v-model="selected">
+                <option value="" disabled selected>Escolha o Tipo</option>
+                <option value="Cachorro">Cachorro</option>
+                <option value="Gato">Gato</option>                
+                <option value="Outro">Outro</option>
+            </select>
+    <label>Tipo do Animal</label>
+            </div>   
             </div>
              <div class="row">
                 <div class="input-field col s12">
@@ -26,16 +32,16 @@
             </div>
             <div class="row">
                 <div class="input-field col s12">
-                <input type="url" v-model="raca" required>
+                <input type="text" v-model="raca" required>
                 </div>    
             </div>
             <div class="row">
                 <div class="input-field col s12">
-                <input type="url" v-model="foto" required>
+                <input type="url" v-model="foto" required>                
                 </div>    
             </div>
 
-             <router-link to="../listaEventos" class="btn grey">Cancelar</router-link>
+             <router-link to="../listaAnimais" class="btn grey" style ="margin-right: 10px">Cancelar</router-link>
             <button type="submit" class="btn">Confirmar</button>           
             </form>
         </div>
@@ -44,10 +50,17 @@
 
 <script>
     import db from './firebaseInit'
+    import firebase from'firebase'
+
+    $(document).ready(function(){
+    $('select').formSelect();
+  });
+
     export default{
     name: 'editarAnimal',
     data(){
        return {
+           selected: '',
             id_animal: null,
             nome:null,
             tipo:null,
@@ -58,7 +71,8 @@
         }
     },
     beforeRouteEnter(to, from, next){
-        db.collection('animal').where('id_animal','==',to.params.id_animal).get().then(querySnapshot =>{
+        var user = firebase.auth().currentUser
+        db.collection('abrigo').doc(user.uid).collection('animal').where('id_animal','==',to.params.id_animal).get().then(querySnapshot =>{
             querySnapshot.forEach(doc => {
                 next(vm => {
                     vm.id_animal = doc.data().id_animal;
@@ -75,9 +89,17 @@
     watch:{
         '$route': 'fetchData'
     },
+
+    created(){
+        $(document).ready(function(){
+    $('select').formSelect();
+  })
+    },
+
     methods: {
         fetchData(){
-            db.collection('animal').where('id_animal','==',this.$route.params.id_animaç).get().then(querySnapshot => {
+             var user = firebase.auth().currentUser
+            db.collection('abrigo').doc(user.uid).collection('animal').where('id_animal','==',this.$route.params.id_animal).get().then(querySnapshot => {
             querySnapshot.forEach(doc => {
                 this.id_animal = doc.data().id_animal;
                 this.nome = doc.data().nome;
@@ -90,12 +112,13 @@
             })
         },
         updateAnimal(){
-            db.collection('animal').where('id_animal','==',this.$route.params.id_animal).get().then(querySnapshot => {
+             var user = firebase.auth().currentUser
+            db.collection('abrigo').doc(user.uid).collection('animal').where('id_animal','==',this.$route.params.id_animal).get().then(querySnapshot => {
             querySnapshot.forEach(doc => {
                doc.ref.update({
                     id_animal: this.id_animal,
                     nome:this.nome,
-                    tipo:this.tipo,
+                    tipo:this.selected,
                     idade:this.idade,
                     raca:this.raca,
                     foto:this.foto,

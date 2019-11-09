@@ -15,7 +15,12 @@
             </div>
              <div class="row">
                 <div class="input-field col s12">
-                <input type="text" v-model="tipo" required>
+                <select v-model="selected">
+                <option value="" disabled selected>Escolha o Tipo</option>
+                <option value="Adoção">Adoção</option>
+                <option value="Recolhimento">Recolhimento</option>
+            </select>
+    <label>Tipo do Evento</label>
                 </div>    
             </div>
              <div class="row">
@@ -33,7 +38,7 @@
                 <input type="text" v-model="data" required>
                 </div>    
             </div>
-             <router-link to="../listaEventos" class="btn grey">Cancelar</router-link>
+             <router-link to="../listaEventos" class="btn grey" style="margin-right:10px">Cancelar</router-link>
             <button type="submit" class="btn">Confirmar</button>           
             </form>
         </div>
@@ -43,10 +48,16 @@
 <script>
     import db from './firebaseInit'
     import firebase from 'firebase'
+
+    $(document).ready(function(){
+    $('select').formSelect();
+  });
+
     export default{
     name: 'editarEvento',
     data(){
        return {
+        selected: '',
         id_abrigo: null,
         abrigoRealizador: null,
         nome: null,
@@ -57,6 +68,13 @@
         tipo: null
         }
     },
+
+    created(){
+        $(document).ready(function(){
+    $('select').formSelect();
+  });
+    },
+
     beforeRouteEnter(to, from, next) {
     db.collection("eventos")
       .where("id_abrigo", "==", to.params.id_abrigo)
@@ -107,7 +125,7 @@
                    local : this.local,
                    data : this.data,
                    horario : this.horario,
-                   tipo : this.tipo,
+                   tipo : this.selected,
                    abrigoRealizador : this.abrigoRealizador
                   
                    
