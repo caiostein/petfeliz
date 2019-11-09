@@ -47,7 +47,7 @@
             <ul class="collection with-header">
             <li class="collection-header"><h4>Mapa de Eventos Próximos</h4></li>
             <GmapMap
-                :center="{lat:-22.9553543, lng:-43.1728785}"
+                :center="getPosition()"
                 :zoom="17"
                 mapTypeId: google.maps.MapTypeId.ROADMAP
                 style="width: 1500px; height: 600px"
