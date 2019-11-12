@@ -5,6 +5,11 @@
 npm install
 ```
 
+## Google Maps API
+```
+npm i vue2-google-maps
+```
+
 ### Compiles and hot-reloads for development
 ```
 npm run serve
