@@ -34,7 +34,7 @@
             email:null,
             telefone:null,
             endereco:null,
-            seguidores: []
+			seguidores: [],
            };
         },
 
@@ -50,7 +50,7 @@
                         this.nome = document.nome;
                         this.email = document.email;
                         this.telefone = document.telefone;
-                        this.endereco = document.endereco;
+						this.endereco = document.endereco;
                         console.log(snapshot.data().nome)
                     })
 
