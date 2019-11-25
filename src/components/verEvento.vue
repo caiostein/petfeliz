@@ -24,13 +24,13 @@
       </li>
 
 	
-	  <div class = "avaliacao" v-if="usuarioEstaConfirmado">
-		  <button class="btn orange" @click="avaliarEvento(1)"> 1 Estrela</button>
-		  <button class="btn orange" @click="avaliarEvento(2)"> 2 Estrelas</button>
-		  <button class="btn blue" @click="avaliarEvento(3)"> 3 Estrelas</button>
-		  <button class="btn green" @click="avaliarEvento(4)"> 4 Estrelas</button>
-		  <button class="btn green" @click="avaliarEvento(5)"> 5 Estrelas</button>
-	</div>
+      <div class = "avaliacao" v-if="usuarioEstaConfirmado">
+        <button class="btn orange" @click="avaliarEvento(1)"> 1 Estrela</button>
+        <button class="btn orange" @click="avaliarEvento(2)"> 2 Estrelas</button>
+        <button class="btn blue" @click="avaliarEvento(3)"> 3 Estrelas</button>
+        <button class="btn green" @click="avaliarEvento(4)"> 4 Estrelas</button>
+        <button class="btn green" @click="avaliarEvento(5)"> 5 Estrelas</button>
+    </div>
 
 
     </ul>
