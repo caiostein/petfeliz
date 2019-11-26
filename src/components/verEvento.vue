@@ -45,7 +45,7 @@
 
      <div id= "mapaEventos">
             <ul class="collection with-header">
-            <li class="collection-header"><h4>Mapa de Eventos Próximos</h4></li>
+            <li class="collection-header"><h4>Localização do Evento</h4></li>
             <GmapMap
                 :center="getPosition()"
                 :zoom="17"
