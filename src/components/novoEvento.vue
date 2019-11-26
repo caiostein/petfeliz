@@ -92,7 +92,10 @@ export default{
             tipo:null,
             abrigoRealizador: null,
             lat:null,
-            long:null
+			long:null,
+			media:0,
+ 			countAvaliacoes: null
+
         }
     },
 
@@ -115,7 +118,10 @@ export default{
                 tipo: this.selected,
                 abrigoRealizador:  firebase.auth().currentUser.email,
                 lat: this.lat,
-                long: this.long
+				long: this.long,
+				media: this.media,
+				countAvaliacoes: this.countAvaliacoes
+
 
             })
             .then( 

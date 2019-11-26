@@ -46,8 +46,9 @@
                 password: '',
                 nome:null,
                 endereco:null,
-                telefone:null
-
+				telefone:null,
+				media: 0,
+	  			countAvaliacoes: null
 
             };
         },
@@ -61,7 +62,9 @@
                         email:this.email,
                         nome:this.nome,
                         endereco:this.endereco,
-                        telefone:this.telefone
+						telefone:this.telefone,
+						media: this.media,
+	  					countAvaliacoes: this.countAvaliacoes
                       })
                         }
                         this.$router.push('login')

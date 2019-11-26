@@ -7,6 +7,17 @@
                 <li class = "collection-item">Email de contato: {{email}}</li>
                 <li class = "collection-item">Telefone de contato: {{telefone}}</li>
                 <li class = "collection-item">Endereço: {{endereco}}</li>  
+                <li class="collection-item" v-if="media==0">Nota do Evento: Ainda não há notas </li>
+	            <li class="collection-item" v-else>Nota do Evento: {{media}}</li>
+
+                <div class = "avaliacao">
+                    <button class="btn orange" @click="avaliarAbrigo(1)"> 1 Estrela</button>
+                    <button class="btn orange" @click="avaliarAbrigo(2)"> 2 Estrelas</button>
+                    <button class="btn blue" @click="avaliarAbrigo(3)"> 3 Estrelas</button>
+                    <button class="btn green" @click="avaliarAbrigo(4)"> 4 Estrelas</button>
+                    <button class="btn green" @click="avaliarAbrigo(5)"> 5 Estrelas</button>
+	            </div>
+
             </ul>
             <div class="center-align">
             <br>
@@ -34,7 +45,9 @@
             email:null,
             telefone:null,
             endereco:null,
-            seguidores: []
+			seguidores: [],
+            media: 0,
+	  		countAvaliacoes: null
            };
         },
 
@@ -50,7 +63,9 @@
                         this.nome = document.nome;
                         this.email = document.email;
                         this.telefone = document.telefone;
-                        this.endereco = document.endereco;
+						this.endereco = document.endereco;
+                        this.media = document.media;
+                        this.countAvaliacoes = document.countAvaliacoes;
                         console.log(snapshot.data().nome)
                     })
 
@@ -72,7 +87,25 @@
 
                 });
             }
-            }
+            },
+
+            
+
+            avaliarAbrigo: function(nota){
+                this.media = (this.media*this.countAvaliacoes+nota)/(this.countAvaliacoes+1)
+                this.countAvaliacoes++;
+                    
+                db.collection('abrigo').where('email','==',this.email).get().then(querySnapshot => {
+                    querySnapshot.forEach(doc => {
+                        doc.ref.update({
+                            media:this.media
+                        })
+                    })
+                }) 	
+                this.$forceUpdate();
+                
+                return this.media;
+            },
 
 
         }

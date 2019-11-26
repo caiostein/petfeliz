@@ -12,7 +12,9 @@
       <li class="collection-item">Tipo do Evento: {{tipo}} </li>
       <li class="collection-item">Latitude do local do Evento: {{lat}} </li>
       <li class="collection-item">Longitude do local do Evento: {{long}} </li>
-      
+	  <li class="collection-item" v-if="media==0">Nota do Evento: Ainda não há notas </li>
+	  <li class="collection-item" v-else>Nota do Evento: {{media}}</li>
+
       <li class="collection-item">Abrigo Realizador: {{abrigoRealizador}}<br><br>
       <router-link to = "/verAbrigo" class="btn blue"> Página do Abrigo Realizador </router-link> <br> <br>
       <button @click="seguirAbrigo" class="btn blue">Seguir Abrigo</button></li>
@@ -20,6 +22,17 @@
       <li class="collection-item"> <button class="btn red" @click="desconfirmarPresenca" v-if="usuarioEstaConfirmado"> Cancelar Confirmação </button>
         <button v-else class="btn green" @click="confirmarPresenca"> Confirmar Presença </button>
       </li>
+
+	
+      <div class = "avaliacao" v-if="usuarioEstaConfirmado">
+        <button class="btn orange" @click="avaliarEvento(1)"> 1 Estrela</button>
+        <button class="btn orange" @click="avaliarEvento(2)"> 2 Estrelas</button>
+        <button class="btn blue" @click="avaliarEvento(3)"> 3 Estrelas</button>
+        <button class="btn green" @click="avaliarEvento(4)"> 4 Estrelas</button>
+        <button class="btn green" @click="avaliarEvento(5)"> 5 Estrelas</button>
+    </div>
+
+
     </ul>
 
   <ul class="collapsible">
@@ -102,7 +115,10 @@ export default {
       usuarioEstaConfirmado: false,
       usuarioDono: false,
       lat: null,
-      long: null
+	  long: null,
+	  media: 0,
+	  countAvaliacoes: null
+	  
     };
   },
   beforeRouteEnter(to, from, next) {
@@ -122,7 +138,8 @@ export default {
             vm.horario = doc.data().horario;
             vm.tipo = doc.data().tipo;
             vm.lat = doc.data().lat;
-            vm.long = doc.data().long;
+			vm.long = doc.data().long;
+			vm.media = doc.data().media
 
             if(vm.id_abrigo == user.uid){
               vm.usuarioDono = true;
@@ -204,7 +221,8 @@ export default {
             this.tipo = doc.data().tipo;
             this.abrigoRealizador = doc.data().abrigoRealizador;
             this.lat = doc.data().lat;
-            this.long = doc.data().long;
+			this.long = doc.data().long;
+			this.media = doc.data().media;
             
           });
         });
@@ -254,7 +272,25 @@ export default {
         lat: parseFloat(this.lat),
         lng: parseFloat(this.long)
       }
-    },
+	},
+
+	avaliarEvento: function(nota){
+		this.media = (this.media*this.countAvaliacoes+nota)/(this.countAvaliacoes+1)
+		this.countAvaliacoes++;
+		
+		db.collection('eventos').where('nome','==',this.nome).get().then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+            	doc.ref.update({
+					media:this.media
+				})
+			})
+		}) 
+		
+		this.$forceUpdate();
+		
+
+		return this.media;
+	},
 
     confirmarPresenca(){
         if(confirm("Deseja confirmar presença?")){
