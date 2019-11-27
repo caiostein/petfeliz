@@ -48,7 +48,8 @@
                 endereco:null,
 				telefone:null,
 				media: 0,
-	  			countAvaliacoes: null
+                countAvaliacoes: null,
+                id_abrigo:null  
 
             };
         },
@@ -64,7 +65,8 @@
                         endereco:this.endereco,
 						telefone:this.telefone,
 						media: this.media,
-	  					countAvaliacoes: this.countAvaliacoes
+                        countAvaliacoes: this.countAvaliacoes,
+                        id_abrigo:treco.uid
                       })
                         }
                         this.$router.push('login')

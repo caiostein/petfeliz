@@ -12,25 +12,149 @@
       <li class="collection-item">Tipo do Evento: {{tipo}} </li>
       <li class="collection-item">Latitude do local do Evento: {{lat}} </li>
       <li class="collection-item">Longitude do local do Evento: {{long}} </li>
-	  <li class="collection-item" v-if="media==0">Nota do Evento: Ainda não há notas </li>
-	  <li class="collection-item" v-else>Nota do Evento: {{media}}</li>
-
-      <li class="collection-item">Abrigo Realizador: {{abrigoRealizador}}<br><br>
-      <router-link to = "/verAbrigo" class="btn blue"> Página do Abrigo Realizador </router-link> <br> <br>
-      <button @click="seguirAbrigo" class="btn blue">Seguir Abrigo</button></li>
+      <li class="collection-item">Evento Realizador: {{abrigoRealizador}}<br><br>
+      <router-link v-bind:to="{name: 'verAbrigo', params:{id:id_abrigo}}" class="btn blue"> Página do Abrigo Realizador </router-link> <br> <br>
+      <button @click="seguirAbrigo" class="btn blue">Seguir Evento</button></li>
 
       <li class="collection-item"> <button class="btn red" @click="desconfirmarPresenca" v-if="usuarioEstaConfirmado"> Cancelar Confirmação </button>
         <button v-else class="btn green" @click="confirmarPresenca"> Confirmar Presença </button>
       </li>
+	  <li class="collection-item" v-if="media>=0 && media<0.5">
+                <p>Nota do Evento:</p>
+                <i class="small material-icons yellow-text" > star_border </i>
+                <i class="small material-icons yellow-text"> star_border </i>
+                <i class="small material-icons yellow-text"> star_border </i>
+                <i class="small material-icons yellow-text"> star_border </i>
+                <i class="small material-icons yellow-text"> star_border </i></li>
 
-	
-      <div class = "avaliacao" v-if="usuarioEstaConfirmado">
-        <button class="btn orange" @click="avaliarEvento(1)"> 1 Estrela</button>
-        <button class="btn orange" @click="avaliarEvento(2)"> 2 Estrelas</button>
-        <button class="btn blue" @click="avaliarEvento(3)"> 3 Estrelas</button>
-        <button class="btn green" @click="avaliarEvento(4)"> 4 Estrelas</button>
-        <button class="btn green" @click="avaliarEvento(5)"> 5 Estrelas</button>
-    </div>
+                 <li class="collection-item" v-else-if="media>=0.5 && media<1">
+                <p>Nota do Evento:</p>
+                <i class="small material-icons yellow-text"> star_half </i>
+                <i class="small material-icons yellow-text"> star_border </i>
+                <i class="small material-icons yellow-text"> star_border </i>
+                <i class="small material-icons yellow-text"> star_border </i>
+                <i class="small material-icons yellow-text"> star_border </i></li>
+
+                <li class="collection-item" v-else-if="media>=1 && media<1.5">
+                <p>Nota do Evento:</p>
+                <i class="small material-icons yellow-text"> star </i>
+                <i class="small material-icons yellow-text"> star_border </i>
+                <i class="small material-icons yellow-text"> star_border </i>
+                <i class="small material-icons yellow-text"> star_border </i>
+                <i class="small material-icons yellow-text"> star_border </i></li>
+
+                <li class="collection-item" v-else-if="media>=1.5 && media<2">                
+                <p>Nota do Evento:</p>
+                <i class="small material-icons yellow-text"> star </i>
+                <i class="small material-icons yellow-text"> star_half </i>
+                <i class="small material-icons yellow-text"> star_border </i>
+                <i class="small material-icons yellow-text"> star_border </i>
+                <i class="small material-icons yellow-text"> star_border </i></li>
+
+                <li class="collection-item" v-else-if="media>=2 && media<2.5">
+                <p>Nota do Evento:</p>
+                <i class="small material-icons yellow-text"> star </i>
+                <i class="small material-icons yellow-text"> star </i>
+                <i class="small material-icons yellow-text"> star_border </i>
+                <i class="small material-icons yellow-text"> star_border </i>
+                <i class="small material-icons yellow-text"> star_border </i></li>
+
+                <li class="collection-item" v-else-if="media>=2.5 && media<3">
+                <p>Nota do Evento:</p>
+                <i class="small material-icons yellow-text"> star </i>
+                <i class="small material-icons yellow-text"> star </i>
+                <i class="small material-icons yellow-text"> star_half </i>
+                <i class="small material-icons yellow-text"> star_border </i>
+                <i class="small material-icons yellow-text"> star_border </i></li>
+
+                <li class="collection-item" v-else-if="media>=3 && media<3.5">
+                <p>Nota do Evento:</p>
+                <i class="small material-icons yellow-text"> star </i>
+                <i class="small material-icons yellow-text"> star </i>
+                <i class="small material-icons yellow-text"> star </i>
+                <i class="small material-icons yellow-text"> star_border </i>
+                <i class="small material-icons yellow-text"> star_border </i></li>
+
+                <li class="collection-item" v-else-if="media>=3.5 && media<4">
+                <p>Nota do Evento:</p>
+                <i class="small material-icons yellow-text"> star </i>
+                <i class="small material-icons yellow-text"> star </i>
+                <i class="small material-icons yellow-text"> star </i>
+                <i class="small material-icons yellow-text"> star_half </i>
+                <i class="small material-icons yellow-text"> star_border </i></li>
+
+                <li class="collection-item" v-else-if="media>=4 && media<4.5">
+                <p>Nota do Evento:</p>
+                <i class="small material-icons yellow-text"> star </i>
+                <i class="small material-icons yellow-text"> star </i>
+                <i class="small material-icons yellow-text"> star </i>
+                <i class="small material-icons yellow-text"> star </i>
+                <i class="small material-icons yellow-text"> star_border </i></li>
+
+                <li class="collection-item" v-else-if="media>=4.5 && media<5">
+                <p>Nota do Evento:</p>
+                <i class="small material-icons yellow-text"> star </i>
+                <i class="small material-icons yellow-text"> star </i>
+                <i class="small material-icons yellow-text"> star </i>
+                <i class="small material-icons yellow-text"> star </i>
+                <i class="small material-icons yellow-text"> star_half </i></li>
+
+                <li class="collection-item" v-else-if="media>=5">
+                <p>Nota do Evento:</p>
+                <i class="small material-icons yellow-text"> star </i>
+                <i class="small material-icons yellow-text"> star </i>
+                <i class="small material-icons yellow-text"> star </i>
+                <i class="small material-icons yellow-text"> star </i>
+                <i class="small material-icons yellow-text"> star </i></li>
+
+                <li v-if="!voted && usuarioEstaConfirmado" class="collection-item">                 
+                <h4> Avalie o Evento! </h4>               
+                <button class="red waves-effect waves-light btn-large" style="margin:10px" @click="avaliarEvento(1)">
+                    <i class="large material-icons"> star </i></button>
+                <button class="btn-large orange" style="margin:10px" @click="avaliarEvento(2)"> 
+                    <i class="small material-icons"> star </i>
+                    <i class="small material-icons"> star </i></button>
+                <button class="btn-large yellow" style="margin:10px" @click="avaliarEvento(3)"> 
+                    <i class="small material-icons"> star </i>
+                    <i class="small material-icons"> star </i>
+                    <i class="small material-icons"> star </i></button>
+                <button class="btn-large blue" style="margin:10px" @click="avaliarEvento(4)">
+                    <i class="small material-icons"> star </i>
+                    <i class="small material-icons"> star </i>
+                    <i class="small material-icons"> star </i>
+                    <i class="small material-icons"> star </i></button>
+                <button class="btn-large green" style="margin:10px" @click="avaliarEvento(5)">
+                    <i class="small material-icons"> star </i>
+                    <i class="small material-icons"> star </i>
+                    <i class="small material-icons"> star </i>
+                    <i class="small material-icons"> star </i>
+                    <i class="small material-icons"> star </i></button>
+                </li>
+                <li class="collection-item" v-else-if="voted && usuarioEstaConfirmado">
+                    <h4> Obrigado pelo voto! </h4>
+                    <button class="btn-large orange disabled" style="margin:10px" @click="avaliarEvento(1)">
+                    <i class="large material-icons"> star </i></button>
+                <button class="btn-large orange disabled" style="margin:10px" @click="avaliarEvento(2)"> 
+                    <i class="small material-icons"> star </i>
+                    <i class="small material-icons"> star </i></button>
+                <button class="btn-large blue disabled" style="margin:10px" @click="avaliarEvento(3)"> 
+                    <i class="small material-icons"> star </i>
+                    <i class="small material-icons"> star </i>
+                    <i class="small material-icons"> star </i></button>
+                <button class="btn-large green disabled" style="margin:10px" @click="avaliarEvento(4)">
+                    <i class="small material-icons"> star </i>
+                    <i class="small material-icons"> star </i>
+                    <i class="small material-icons"> star </i>
+                    <i class="small material-icons"> star </i></button>
+                <button class="btn-large green disabled" style="margin:10px" @click="avaliarEvento(5)">
+                    <i class="small material-icons"> star </i>
+                    <i class="small material-icons"> star </i>
+                    <i class="small material-icons"> star </i>
+                    <i class="small material-icons"> star </i>
+                    <i class="small material-icons"> star </i></button>
+                </li>
+
+      
 
 
     </ul>
@@ -117,7 +241,8 @@ export default {
       lat: null,
 	  long: null,
 	  media: 0,
-	  countAvaliacoes: null
+    countAvaliacoes: null,
+    voted:null
 	  
     };
   },
@@ -153,6 +278,7 @@ export default {
     $route: "fetchData"
   },
   created(){
+    
     $(document).ready(function(){
     $('.collapsible').collapsible();
     this.fetchData();
@@ -163,8 +289,9 @@ export default {
     var instances = M.Collapsible.init(elems, options);
   });
     firebase.auth().onAuthStateChanged((user) => {
+      
+        console.log(this.nome)
       if(user){
-
         db.collection("eventos")
         .where("id_abrigo", "==", this.$route.params.id_abrigo)
         .get()
@@ -199,6 +326,19 @@ export default {
         });
             })
 
+        db.collection("usuario").doc(firebase.auth().currentUser.uid).collection("votosEvento")
+        .where("nomeEvento", "==", this.nome)
+        .get()
+        .then(querySnapshot => {
+          querySnapshot.forEach(doc => {               
+          if(doc.exists){ 
+            console.log("Usuario Já Votou")
+              this.voted = true;
+          }
+        });
+          
+              })
+
 
             
       }
@@ -222,14 +362,14 @@ export default {
             this.abrigoRealizador = doc.data().abrigoRealizador;
             this.lat = doc.data().lat;
 			this.long = doc.data().long;
-			this.media = doc.data().media;
+      this.media = doc.data().media;
             
           });
         });
     },
 
     seguirAbrigo(){
-        if(confirm("Deseja seguir esse Abrigo?")){
+        if(confirm("Deseja seguir esse Evento?")){
           usuarioLogado = firebase.auth().currentUser
           
           if(usuarioLogado){
@@ -276,15 +416,32 @@ export default {
 
 	avaliarEvento: function(nota){
 		this.media = (this.media*this.countAvaliacoes+nota)/(this.countAvaliacoes+1)
-		this.countAvaliacoes++;
+    this.countAvaliacoes++;
+    this.voted = true;
 		
 		db.collection('eventos').where('nome','==',this.nome).get().then(querySnapshot => {
             querySnapshot.forEach(doc => {
             	doc.ref.update({
-					media:this.media
+          media:this.media,
+          countAvaliacoes:this.countAvaliacoes
+     
 				})
 			})
-		}) 
+    }) 
+    
+
+    db.collection("eventos")
+        .where("nome", "==", this.nome)
+        .get()
+        .then(querySnapshot => {
+          querySnapshot.forEach(doc => {    
+              db.collection("usuario").doc(firebase.auth().currentUser.uid).collection("votosEvento").doc(doc.id).set({
+                voto: nota,
+                nomeEvento : this.nome
+                });
+            
+        });
+              })
 		
 		this.$forceUpdate();
 		

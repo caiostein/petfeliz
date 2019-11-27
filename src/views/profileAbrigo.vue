@@ -7,21 +7,99 @@
                 <li class = "collection-item">Email de contato: {{email}}</li>
                 <li class = "collection-item">Telefone de contato: {{telefone}}</li>
                 <li class = "collection-item">Endereço: {{endereco}}</li>  
-                <li class="collection-item" v-if="media==0">Nota do Evento: Ainda não há notas </li>
-	            <li class="collection-item" v-else>Nota do Evento: {{media}}</li>
 
-                <div class = "avaliacao">
-                    <button class="btn orange" @click="avaliarAbrigo(1)"> 1 Estrela</button>
-                    <button class="btn orange" @click="avaliarAbrigo(2)"> 2 Estrelas</button>
-                    <button class="btn blue" @click="avaliarAbrigo(3)"> 3 Estrelas</button>
-                    <button class="btn green" @click="avaliarAbrigo(4)"> 4 Estrelas</button>
-                    <button class="btn green" @click="avaliarAbrigo(5)"> 5 Estrelas</button>
-	            </div>
+	            <li class="collection-item" v-if="media>=0 && media<0.5">
+                <p>Nota do Abrigo:</p>
+                <i class="small material-icons yellow-text" > star_border </i>
+                <i class="small material-icons yellow-text"> star_border </i>
+                <i class="small material-icons yellow-text"> star_border </i>
+                <i class="small material-icons yellow-text"> star_border </i>
+                <i class="small material-icons yellow-text"> star_border </i></li>
+
+                 <li class="collection-item" v-else-if="media>=0.5 && media<1">
+                <p>Nota do Abrigo:</p>
+                <i class="small material-icons yellow-text"> star_half </i>
+                <i class="small material-icons yellow-text"> star_border </i>
+                <i class="small material-icons yellow-text"> star_border </i>
+                <i class="small material-icons yellow-text"> star_border </i>
+                <i class="small material-icons yellow-text"> star_border </i></li>
+
+                <li class="collection-item" v-else-if="media>=1 && media<1.5">
+                <p>Nota do Abrigo:</p>
+                <i class="small material-icons yellow-text"> star </i>
+                <i class="small material-icons yellow-text"> star_border </i>
+                <i class="small material-icons yellow-text"> star_border </i>
+                <i class="small material-icons yellow-text"> star_border </i>
+                <i class="small material-icons yellow-text"> star_border </i></li>
+
+                <li class="collection-item" v-else-if="media>=1.5 && media<2">                
+                <p>Nota do Abrigo:</p>
+                <i class="small material-icons yellow-text"> star </i>
+                <i class="small material-icons yellow-text"> star_half </i>
+                <i class="small material-icons yellow-text"> star_border </i>
+                <i class="small material-icons yellow-text"> star_border </i>
+                <i class="small material-icons yellow-text"> star_border </i></li>
+
+                <li class="collection-item" v-else-if="media>=2 && media<2.5">
+                <p>Nota do Abrigo:</p>
+                <i class="small material-icons yellow-text"> star </i>
+                <i class="small material-icons yellow-text"> star </i>
+                <i class="small material-icons yellow-text"> star_border </i>
+                <i class="small material-icons yellow-text"> star_border </i>
+                <i class="small material-icons yellow-text"> star_border </i></li>
+
+                <li class="collection-item" v-else-if="media>=2.5 && media<3">
+                <p>Nota do Abrigo:</p>
+                <i class="small material-icons yellow-text"> star </i>
+                <i class="small material-icons yellow-text"> star </i>
+                <i class="small material-icons yellow-text"> star_half </i>
+                <i class="small material-icons yellow-text"> star_border </i>
+                <i class="small material-icons yellow-text"> star_border </i></li>
+
+                <li class="collection-item" v-else-if="media>=3 && media<3.5">
+                <p>Nota do Abrigo:</p>
+                <i class="small material-icons yellow-text"> star </i>
+                <i class="small material-icons yellow-text"> star </i>
+                <i class="small material-icons yellow-text"> star </i>
+                <i class="small material-icons yellow-text"> star_border </i>
+                <i class="small material-icons yellow-text"> star_border </i></li>
+
+                <li class="collection-item" v-else-if="media>=3.5 && media<4">
+                <p>Nota do Abrigo:</p>
+                <i class="small material-icons yellow-text"> star </i>
+                <i class="small material-icons yellow-text"> star </i>
+                <i class="small material-icons yellow-text"> star </i>
+                <i class="small material-icons yellow-text"> star_half </i>
+                <i class="small material-icons yellow-text"> star_border </i></li>
+
+                <li class="collection-item" v-else-if="media>=4 && media<4.5">
+                <p>Nota do Abrigo:</p>
+                <i class="small material-icons yellow-text"> star </i>
+                <i class="small material-icons yellow-text"> star </i>
+                <i class="small material-icons yellow-text"> star </i>
+                <i class="small material-icons yellow-text"> star </i>
+                <i class="small material-icons yellow-text"> star_border </i></li>
+
+                <li class="collection-item" v-else-if="media>=4.5 && media<5">
+                <p>Nota do Abrigo:</p>
+                <i class="small material-icons yellow-text"> star </i>
+                <i class="small material-icons yellow-text"> star </i>
+                <i class="small material-icons yellow-text"> star </i>
+                <i class="small material-icons yellow-text"> star </i>
+                <i class="small material-icons yellow-text"> star_half </i></li>
+
+                <li class="collection-item" v-else-if="media>=5">
+                <p>Nota do Abrigo:</p>
+                <i class="small material-icons yellow-text"> star </i>
+                <i class="small material-icons yellow-text"> star </i>
+                <i class="small material-icons yellow-text"> star </i>
+                <i class="small material-icons yellow-text"> star </i>
+                <i class="small material-icons yellow-text"> star </i></li>
 
             </ul>
             <div class="center-align">
             <br>
-             <router-link to ="/Seguidores" class="btn blue"> Visualizar Seguidores </router-link> <br> <br>
+             <router-link to ="/Seguidores" class="btn blue" style="margin: 10px"> Visualizar Seguidores </router-link>
                 <button class="btn waves-effect waves-light red" @click="deleteUser">Deletar Abrigo</button>
             </div>
         
@@ -79,6 +157,14 @@
                  if(confirm('Tem certeza?')){
                 var user = firebase.auth().currentUser;
                 var userEmail = firebase.auth().currentUser.email;
+                db.collection("abrigo")
+          .where("id_abrigo", "==", user.uid)
+          .get()
+          .then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+              doc.ref.delete();
+            });
+          });
                 user.delete().then((user) =>{
                     alert(`A conta de ${userEmail} foi excluída!`);
                     this.$router.replace('login')
@@ -89,23 +175,6 @@
             }
             },
 
-            
-
-            avaliarAbrigo: function(nota){
-                this.media = (this.media*this.countAvaliacoes+nota)/(this.countAvaliacoes+1)
-                this.countAvaliacoes++;
-                    
-                db.collection('abrigo').where('email','==',this.email).get().then(querySnapshot => {
-                    querySnapshot.forEach(doc => {
-                        doc.ref.update({
-                            media:this.media
-                        })
-                    })
-                }) 	
-                this.$forceUpdate();
-                
-                return this.media;
-            },
 
 
         }
