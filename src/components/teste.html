@@ -1,0 +1,13 @@
+<!doctype html>
+<script src="https://smtpjs.com/v3/smtp.js"></script>  
+<script>
+	Email.send({
+    SecureToken : "29c9caf0-8bd4-46ca-a1c2-199f846d223a",
+    To : "biacoronha@gmail.com",
+    From : "biacoronha@gmail.com",
+    Subject : "Test Email",
+    Body : "teste"
+    }).then(
+        message => alert("mail sent successfully")
+    );
+</script> 

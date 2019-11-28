@@ -60,23 +60,26 @@
   </div>
     </div>
         <router-link to="/listaEventos" class="btn grey" style="margin-right: 10px">Cancel</router-link>
-        <button type="submit" class="btn">Submit</button>           
+        <button type="submit" class="btn">Submit</button>
     </form>
-            
         </div>
+
+        <div>
+            <button class="btn" @click="Email.send()">Vai</button>
+        </div>
+    
     </div>
+
     
 </template>
 
 <script>
     import db from './firebaseInit'
     import firebase from 'firebase'
-
-
+    
   $(document).ready(function(){
     $('select').formSelect();
   });
-    
 
 export default{
     name: 'novoEvento',
@@ -121,8 +124,6 @@ export default{
 				long: this.long,
 				media: this.media,
 				countAvaliacoes: this.countAvaliacoes
-
-
             })
             .then( 
                 this.$router.push('/listaEventos')
@@ -130,7 +131,8 @@ export default{
             .catch(error => {
                 console.log(err)
             })
-        }
+        },
+          
     }
   
 }
