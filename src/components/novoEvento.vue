@@ -60,13 +60,10 @@
   </div>
     </div>
         <router-link to="/listaEventos" class="btn grey" style="margin-right: 10px">Cancel</router-link>
-        <button type="submit" class="btn" v-bind="sendEmail"  @click="sendEmail()">Submit</button>
+        <button type="submit" class="btn" v-bind="getSeguidores"  @click="getSeguidores()">Submit</button>
     </form>
         </div>
 
-        <div>
-			<input type="button" v-bind="sendEmail" value="Send Email" @click="sendEmail()">
-        </div>
     
     </div>
 
@@ -97,8 +94,6 @@ export default{
 			long:null,
 			media:0,
 			 countAvaliacoes: null,
-			 seguidores: []
-
         }
     },
 
@@ -124,7 +119,6 @@ export default{
 				long: this.long,
 				media: this.media,
 				countAvaliacoes: this.countAvaliacoes,
-				seguidores: this.seguidores
             })
             .then( 
                 this.$router.push('/listaEventos')
@@ -132,31 +126,40 @@ export default{
             .catch(error => {
                 console.log(err)
             })
-		},
-		
-			sendEmail(){
-				//get seguidores
-				var abrigoLogado = firebase.auth().currentUser
-				 db.collection('abrigo').doc(abrigoLogado.uid).collection('seguidores')
-                        .get()
-                        .then(querrySnapshot=>{
-                            querrySnapshot.forEach(doc =>{                                       
-                                this.seguidores.push(doc.data().emailSeguidor)
-                            })
-						})			
-							
-				var vamoLa = this.seguidores.join(',')
-				console.log(vamoLa)
-				Email.send({
+        },
+        
+        sendEmail(seguidores){
+                console.log("sendEmail")
+
+                Email.send({
 					SecureToken : "29c9caf0-8bd4-46ca-a1c2-199f846d223a",
-					To : vamoLa,
+					To : seguidores,
 					From : "biacoronha@gmail.com",
 					Subject : "Novo Evento",
 					Body : "Um novo Evento foi criado. AGORA TEM QUE IR CARALHO"
 					}).then(
 						message => alert("mail sent successfully")
-					);
-	}
+                    );
+                    console.log(seguidores)
+            },
+
+			getSeguidores(){
+                var abrigoLogado = firebase.auth().currentUser
+                var seguidores = [""]
+                console.log("getSeguidores")
+
+				 db.collection('abrigo').doc(abrigoLogado.uid).collection('seguidores')
+                        .get()
+                        .then(querrySnapshot=>{
+                            querrySnapshot.forEach(doc =>{
+                            var email = doc.data().emailSeguidor
+                                seguidores = seguidores.push(email)
+                            })
+                        })
+                         this.sendEmail(seguidores)
+            },
+            
+            
           
     }
   
