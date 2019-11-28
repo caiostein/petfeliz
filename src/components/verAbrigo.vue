@@ -196,6 +196,7 @@
             vm.media = doc.data().media;
             vm.countAvaliacoes = doc.data().countAvaliacoes;
             vm.email = doc.data().email;     
+            vm.id_abrigo = doc.data().id_abrigo
             
             
 
@@ -258,15 +259,16 @@ watch: {
             this.media = doc.data().media;
             this.countAvaliacoes = doc.data().countAvaliacoes;
             this.email = doc.data().email;
+            this.id_abrigo = doc.data().id_abrigo
           });
         });
     },
 
             seguirAbrigo(){
                 if(confirm("Deseja seguir esse Abrigo?")){
-                usuarioLogado = firebase.auth().currentUser
+                var usuarioLogado = firebase.auth().currentUser
                 
-                if(usuarioLogado){
+                console.log(this.id_abrigo)
                     db.collection("abrigo")
                     .where("id_abrigo", "==", this.id_abrigo)
                     .get()
@@ -286,14 +288,14 @@ watch: {
                             this.id_abrigo = doc.data().id_abrigo;            
                             this.abrigoRealizador = doc.data().abrigoRealizador;
                             db.collection("usuario").doc(usuarioLogado.uid).collection("inscricoes").doc(this.id_abrigo).set({
-                                nomeSeguido : this.abrigoRealizador,
+                                nomeSeguido : this.nome,
                                 idSeguido : this.id_abrigo
                             });
                             this.$router.push("../listaEventos");
                             });
                         })
                     )
-                }
+                
                 }
             },
 
