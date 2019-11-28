@@ -60,19 +60,18 @@
   </div>
     </div>
         <router-link to="/listaEventos" class="btn grey" style="margin-right: 10px">Cancel</router-link>
-        <button type="submit" class="btn">Submit</button>
+        <button type="submit" class="btn" v-bind="sendEmail"  @click="sendEmail()">Submit</button>
     </form>
         </div>
 
         <div>
-            <button class="btn" @click="Email.send()">Vai</button>
+			<input type="button" v-bind="sendEmail" value="Send Email" @click="sendEmail()">
         </div>
     
     </div>
 
     
 </template>
-
 <script>
     import db from './firebaseInit'
     import firebase from 'firebase'
@@ -97,7 +96,8 @@ export default{
             lat:null,
 			long:null,
 			media:0,
- 			countAvaliacoes: null
+			 countAvaliacoes: null,
+			 seguidores: []
 
         }
     },
@@ -106,8 +106,8 @@ export default{
        $(document).ready(function(){
     $('select').formSelect();
   });
-    },
-
+	},
+	
 
     methods: {
         salvarEvento(){
@@ -123,7 +123,8 @@ export default{
                 lat: this.lat,
 				long: this.long,
 				media: this.media,
-				countAvaliacoes: this.countAvaliacoes
+				countAvaliacoes: this.countAvaliacoes,
+				seguidores: this.seguidores
             })
             .then( 
                 this.$router.push('/listaEventos')
@@ -131,11 +132,36 @@ export default{
             .catch(error => {
                 console.log(err)
             })
-        },
+		},
+		
+			sendEmail(){
+				//get seguidores
+				var abrigoLogado = firebase.auth().currentUser
+				 db.collection('abrigo').doc(abrigoLogado.uid).collection('seguidores')
+                        .get()
+                        .then(querrySnapshot=>{
+                            querrySnapshot.forEach(doc =>{                                       
+                                this.seguidores.push(doc.data().emailSeguidor)
+                            })
+						})			
+							
+				var vamoLa = this.seguidores.join(',')
+				console.log(vamoLa)
+				Email.send({
+					SecureToken : "29c9caf0-8bd4-46ca-a1c2-199f846d223a",
+					To : vamoLa,
+					From : "biacoronha@gmail.com",
+					Subject : "Novo Evento",
+					Body : "Um novo Evento foi criado. AGORA TEM QUE IR CARALHO"
+					}).then(
+						message => alert("mail sent successfully")
+					);
+	}
           
     }
   
 }
+
 </script>
 
 <style scoped>
