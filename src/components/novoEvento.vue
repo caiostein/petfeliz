@@ -93,7 +93,7 @@ export default{
             lat:null,
 			long:null,
 			media:0,
-			 countAvaliacoes: null,
+             countAvaliacoes: null,
         }
     },
 
@@ -128,24 +128,34 @@ export default{
             })
         },
         
-        sendEmail(seguidores){
+        sendEmail(email,nome){
                 console.log("sendEmail")
+
+                
 
                 Email.send({
 					SecureToken : "29c9caf0-8bd4-46ca-a1c2-199f846d223a",
-					To : seguidores,
+					To : email,
 					From : "biacoronha@gmail.com",
-					Subject : "Novo Evento",
-					Body : "Um novo Evento foi criado. AGORA TEM QUE IR CARALHO"
+					Subject : "Novo Evento PetFeliz",
+					Body : "O Abrigo " + nome + " acabou de publicar um novo evento! Vá conferir!"
 					}).then(
-						message => alert("mail sent successfully")
+						message => alert(email + " mail sent successfully")
                     );
-                    console.log(seguidores)
+                    console.log(email)
+                    
             },
 
 			getSeguidores(){
                 var abrigoLogado = firebase.auth().currentUser
-                var seguidores = [""]
+                var nome
+
+               db.collection('abrigo').where("email", "==", abrigoLogado.email).get().then(querrySnapshot=>{
+                    querrySnapshot.forEach(doc =>{
+                        nome = doc.data().nome
+                        console.log(nome)
+                    })
+                })
                 console.log("getSeguidores")
 
 				 db.collection('abrigo').doc(abrigoLogado.uid).collection('seguidores')
@@ -153,10 +163,9 @@ export default{
                         .then(querrySnapshot=>{
                             querrySnapshot.forEach(doc =>{
                             var email = doc.data().emailSeguidor
-                                seguidores = seguidores.push(email)
+                                this.sendEmail(email,nome)
                             })
                         })
-                         this.sendEmail(seguidores)
             },
             
             
