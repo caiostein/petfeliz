@@ -60,23 +60,22 @@
   </div>
     </div>
         <router-link to="/listaEventos" class="btn grey" style="margin-right: 10px">Cancel</router-link>
-        <button type="submit" class="btn">Submit</button>           
+        <button type="submit" class="btn" v-bind="getSeguidores"  @click="getSeguidores()">Submit</button>
     </form>
-            
         </div>
+
+    
     </div>
+
     
 </template>
-
 <script>
     import db from './firebaseInit'
     import firebase from 'firebase'
-
-
+    
   $(document).ready(function(){
     $('select').formSelect();
   });
-    
 
 export default{
     name: 'novoEvento',
@@ -94,8 +93,7 @@ export default{
             lat:null,
 			long:null,
 			media:0,
- 			countAvaliacoes: null
-
+             countAvaliacoes: null,
         }
     },
 
@@ -103,8 +101,8 @@ export default{
        $(document).ready(function(){
     $('select').formSelect();
   });
-    },
-
+	},
+	
 
     methods: {
         salvarEvento(){
@@ -120,9 +118,7 @@ export default{
                 lat: this.lat,
 				long: this.long,
 				media: this.media,
-				countAvaliacoes: this.countAvaliacoes
-
-
+				countAvaliacoes: this.countAvaliacoes,
             })
             .then( 
                 this.$router.push('/listaEventos')
@@ -130,10 +126,54 @@ export default{
             .catch(error => {
                 console.log(err)
             })
-        }
+        },
+        
+        sendEmail(email,nome){
+                console.log("sendEmail")
+
+                
+
+                Email.send({
+					SecureToken : "29c9caf0-8bd4-46ca-a1c2-199f846d223a",
+					To : email,
+					From : "biacoronha@gmail.com",
+					Subject : "Novo Evento PetFeliz",
+					Body : "O Abrigo " + nome + " acabou de publicar um novo evento! Vá conferir!"
+					}).then(
+						message => alert(email + " mail sent successfully")
+                    );
+                    console.log(email)
+                    
+            },
+
+			getSeguidores(){
+                var abrigoLogado = firebase.auth().currentUser
+                var nome
+
+               db.collection('abrigo').where("email", "==", abrigoLogado.email).get().then(querrySnapshot=>{
+                    querrySnapshot.forEach(doc =>{
+                        nome = doc.data().nome
+                        console.log(nome)
+                    })
+                })
+                console.log("getSeguidores")
+
+				 db.collection('abrigo').doc(abrigoLogado.uid).collection('seguidores')
+                        .get()
+                        .then(querrySnapshot=>{
+                            querrySnapshot.forEach(doc =>{
+                            var email = doc.data().emailSeguidor
+                                this.sendEmail(email,nome)
+                            })
+                        })
+            },
+            
+            
+          
     }
   
 }
+
 </script>
 
 <style scoped>
