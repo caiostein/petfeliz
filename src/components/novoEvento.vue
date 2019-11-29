@@ -140,7 +140,7 @@ export default{
 					Subject : "Novo Evento PetFeliz",
 					Body : "O Abrigo " + nome + " acabou de publicar um novo evento! Vá conferir!"
 					}).then(
-						message => alert(email + " mail sent successfully")
+						message => alert("Email mandado com sucesso para: " + email)
                     );
                     console.log(email)
                     
