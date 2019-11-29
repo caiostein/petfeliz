@@ -195,13 +195,8 @@
             vm.endereco = doc.data().endereco;
             vm.media = doc.data().media;
             vm.countAvaliacoes = doc.data().countAvaliacoes;
-<<<<<<< HEAD
             vm.email = doc.data().email;     
             vm.id_abrigo = doc.data().id_abrigo
-=======
-			vm.email = doc.data().email;   
-			vm.id_abrigo = doc.data().id_abrigo  
->>>>>>> emailAPI
             
             
 
@@ -263,13 +258,8 @@ watch: {
             this.endereco = doc.data().endereco;
             this.media = doc.data().media;
             this.countAvaliacoes = doc.data().countAvaliacoes;
-<<<<<<< HEAD
             this.email = doc.data().email;
             this.id_abrigo = doc.data().id_abrigo
-=======
-			this.email = doc.data().email;
-			this.id_abrigo = doc.data().id_abrigo
->>>>>>> emailAPI
           });
         });
     },
